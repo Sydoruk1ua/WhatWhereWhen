@@ -2,4 +2,6 @@
 *.iml
 out
 target
-*.log
+*.log*
+login_test.jsp
+my_notations.txt
