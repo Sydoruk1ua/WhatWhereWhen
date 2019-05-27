@@ -2,6 +2,7 @@ package com.sydoruk1ua.mdmg.model.dao.impl;
 
 import com.mysql.cj.jdbc.Driver;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
@@ -16,7 +17,7 @@ public class Connector {
 
     static {
         Properties props = new Properties();
-        try (FileInputStream in = new FileInputStream("../db.properties")) {
+        try (FileInputStream in = new FileInputStream(new File("./src/main/resources/db.properties"))) {
             props.load(in);
         } catch (IOException e) {
             e.printStackTrace(); //TODO: handle it and add logger
