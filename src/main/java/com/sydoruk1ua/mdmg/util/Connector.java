@@ -34,6 +34,7 @@ public final class Connector {
             return DATA_SOURCE.getConnection();
         } catch (SQLException e) {
             //logger   //TODO: add logger and write own Exception
+            LOGGER.log(Level.ERROR, e);
             throw new RuntimeException(e);
         }
     }

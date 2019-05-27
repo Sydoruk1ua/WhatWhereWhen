@@ -23,7 +23,6 @@ public class UsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.log(Level.DEBUG, "entered");     //TODO delete this
-        System.out.println("test");
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/users.jsp");
         req.setAttribute("usersList", userService.findAll());
         dispatcher.forward(req, resp);
