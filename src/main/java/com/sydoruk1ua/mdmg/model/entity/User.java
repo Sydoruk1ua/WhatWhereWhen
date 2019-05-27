@@ -10,6 +10,19 @@ public class User {
     private String lastName;
     private Role role;
 
+    private User(Builder builder) {
+        this.id = builder.id;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.role = builder.role;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -56,15 +69,6 @@ public class User {
         return role;
     }
 
-    private User(Builder builder) {
-        this.id = builder.id;
-        this.email = builder.email;
-        this.password = builder.password;
-        this.firstName = builder.firstName;
-        this.lastName = builder.lastName;
-        this.role = builder.role;
-    }
-
     public static class Builder {
         private Integer id;
         private String email;
@@ -73,9 +77,8 @@ public class User {
         private String lastName;
         private Role role;
 
-        public Builder(String email, String password) {
-            this.email = email;
-            this.password = password;
+        private Builder() {
+
         }
 
         public User build() {

@@ -6,11 +6,11 @@ import java.util.Optional;
 public interface GenericDao<T> {
     void create(T entity);
 
-    Optional<T> findById(Long id);
+    Optional<T> findById(Integer id);
 
     List<T> findAll();  //TODO: realisation should return an empty list, if there are no data
 
     void update(T entity);
 
-    void deleteById(Long id);
+    void deleteById(Integer id);
 }
