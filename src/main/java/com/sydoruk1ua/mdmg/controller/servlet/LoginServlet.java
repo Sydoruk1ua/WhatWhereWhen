@@ -12,7 +12,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/login.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/login.jsp");
         dispatcher.forward(req, resp);
     }
 }

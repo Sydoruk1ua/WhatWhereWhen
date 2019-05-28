@@ -23,7 +23,7 @@ public class UsersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.log(Level.DEBUG, "entered");     //TODO delete this
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/users.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/users.jsp");
         req.setAttribute("usersList", userService.findAll());
         LOGGER.log(Level.DEBUG, userService.findAll().size());
         dispatcher.forward(req, resp);
