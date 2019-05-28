@@ -8,5 +8,6 @@ Home
 <form action="login" method="POST">
     <input type="submit" value="Login">
 </form>
+<a href="view/users.jsp">Users</a>
 </body>
 </html>

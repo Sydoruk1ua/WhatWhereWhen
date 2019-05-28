@@ -21,10 +21,11 @@ public class UsersServlet extends HttpServlet {
     private final UserService userService = new UserServiceImpl(new UserDaoImpl());
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         LOGGER.log(Level.DEBUG, "entered");     //TODO delete this
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/view/users.jsp");
         req.setAttribute("usersList", userService.findAll());
+        LOGGER.log(Level.DEBUG, userService.findAll().size());
         dispatcher.forward(req, resp);
     }
 }
