@@ -28,6 +28,7 @@ public final class Connector {
     private Connector() {
     }
 
+    //TODO: check how to close connection
     public static Connection getConnection() {
         try {
             LOGGER.log(Level.DEBUG, "entered"); //TODO: delete this

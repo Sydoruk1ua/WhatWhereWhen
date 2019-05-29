@@ -1,9 +1,9 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css"/>
-    <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>"/>
+    <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 </head>
 
 <body>
@@ -60,5 +60,7 @@
         </c:choose>
     </form>
 </div>
+<%--FOOTER--%>
+<c:import url="common/footer.jsp" charEncoding="UTF-8"/>
 </body>
 </html>
