@@ -7,7 +7,6 @@ import com.sydoruk1ua.mdmg.util.Connector;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,14 +39,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAll() {
         List<User> listOfAllUsers = new ArrayList<>();
-        try (Connection connection = Connector.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL_USERS);
+        try (PreparedStatement preparedStatement = Connector.getConnection().prepareStatement(FIND_ALL_USERS)) {
+
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 do {
-                    Role role = new Role();
-                    role.setId(resultSet.getInt("role_id"));
-                    role.setType(resultSet.getString("role_type"));
+                    Integer roleId = resultSet.getInt("role_id");
+                    String roleType = resultSet.getString("role_type");
+                    Role role = new Role(roleId, roleType);
 
                     User user = User.builder()
                             .withId(resultSet.getInt("id"))
@@ -60,10 +59,10 @@ public class UserDaoImpl implements UserDao {
                     listOfAllUsers.add(user);
                 } while (resultSet.next());
             } else {
-                LOGGER.log(Level.DEBUG, "Result Set is empty!");
+                LOGGER.warn("Result Set is empty!");
             }
         } catch (SQLException e) {
-            LOGGER.log(Level.ERROR, e.toString());
+            LOGGER.log(Level.ERROR, e);
         }
 
         return listOfAllUsers;

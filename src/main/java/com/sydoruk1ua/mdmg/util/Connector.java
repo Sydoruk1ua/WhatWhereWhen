@@ -1,7 +1,6 @@
 package com.sydoruk1ua.mdmg.util;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -13,8 +12,22 @@ public final class Connector {
     private static final BasicDataSource DATA_SOURCE = new BasicDataSource();
     private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("db");
 
-    static {
-        LOGGER.log(Level.DEBUG, "entered"); //TODO: delete this
+    private Connector() {
+    }
+
+    public static Connection getConnection() {
+        try {
+            configConnection();
+            LOGGER.debug("entered");
+            return DATA_SOURCE.getConnection();
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e); //TODO: write own Exception
+        }
+    }
+
+    private static void configConnection() {
+        LOGGER.debug("entered");
         DATA_SOURCE.setDriverClassName(RESOURCE_BUNDLE.getString("db.driver"));
         DATA_SOURCE.setUrl(RESOURCE_BUNDLE.getString("db.url"));
         DATA_SOURCE.setUsername(RESOURCE_BUNDLE.getString("db.username"));
@@ -23,20 +36,5 @@ public final class Connector {
         DATA_SOURCE.setMaxIdle(Integer.parseInt(RESOURCE_BUNDLE.getString("db.max.idle")));
         DATA_SOURCE.setMaxOpenPreparedStatements(Integer.parseInt(RESOURCE_BUNDLE.getString(
                 "db.max.open.prepare.statement")));
-    }
-
-    private Connector() {
-    }
-
-    //TODO: check how to close connection
-    public static Connection getConnection() {
-        try {
-            LOGGER.log(Level.DEBUG, "entered"); //TODO: delete this
-            return DATA_SOURCE.getConnection();
-        } catch (SQLException e) {
-            //logger   //TODO: add logger and write own Exception
-            LOGGER.log(Level.ERROR, e);
-            throw new RuntimeException(e);
-        }
     }
 }

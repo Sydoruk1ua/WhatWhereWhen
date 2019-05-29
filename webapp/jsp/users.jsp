@@ -7,6 +7,7 @@
 </head>
 
 <body>
+<jsp:include page="common/header.jsp"/>
 <div class="container">
     <h2>Users</h2>
     <!--Search Form -->
@@ -37,11 +38,11 @@
                     </tr>
                     </thead>
                     <c:forEach var="user" items="${usersList}">
-                        <c:set var="classSuccess" value=""/>
-                        <c:if test="${idUser == user.id}">
-                            <c:set var="classSuccess" value="info"/>
-                        </c:if>
-                        <tr class="${classSuccess}">
+                        <%--   <c:set var="classSuccess" value=""/>
+                           <c:if test="${idUser == user.id}">
+                               <c:set var="classSuccess" value="info"/>
+                           </c:if>--%>
+                        <tr>
                             <td>${user.id}</td>
                             <td>${user.email}</td>
                             <td>${user.firstName}</td>

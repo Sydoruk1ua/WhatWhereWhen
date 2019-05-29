@@ -3,12 +3,12 @@ package com.sydoruk1ua.mdmg.model.entity;
 import java.util.Objects;
 
 public class User {
-    private Integer id;
-    private String email;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private Role role;
+    private final Integer id;
+    private final String email;
+    private final String password;
+    private final String firstName;
+    private final String lastName;
+    private final Role role;
 
     private User(Builder builder) {
         this.id = builder.id;

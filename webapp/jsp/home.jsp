@@ -1,23 +1,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-<fmt:setLocale value="ru_RU" scope="session"/>
-<fmt:setBundle basename="i18n"/>
 <html>
-<head>
-    <title>Home</title>
-</head>
 <body>
-<fmt:message key="test.locale"/>
+<jsp:include page="common/header.jsp"/>
+<fmt:message key="welcome.user"/>
 Home
-<form action="login" method="POST">
-    <input type="submit" value="Login">
-</form>
 <form action="users" method="POST">
     <input type="submit" value="Users">
+</form>
+<form action="login" method="POST">
+    <input type="submit" value="Sign in">
+</form>
+
+<form action="registration" method="POST">
+    <input type="submit" value="Sign up">
 </form>
 
 <%--FOOTER--%>
 <c:import url="common/footer.jsp" charEncoding="UTF-8"/>
 </body>
+<head>
+    <title>Home</title>
+</head>
 </html>
