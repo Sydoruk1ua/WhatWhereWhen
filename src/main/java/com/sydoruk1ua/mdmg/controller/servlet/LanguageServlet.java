@@ -1,6 +1,5 @@
 package com.sydoruk1ua.mdmg.controller.servlet;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +10,9 @@ import java.io.IOException;
 @WebServlet("/language")
 public class LanguageServlet extends HttpServlet {
 
-    public static final String LANG = "lang";
-    public static final String EN = "en_EN";
-    public static final String RU = "ru_RU";
+    private static final String LANG = "lang";
+    private static final String EN = "en_EN";
+    private static final String RU = "ru_RU";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,7 +24,6 @@ public class LanguageServlet extends HttpServlet {
         }
         StringBuffer requestURL = req.getRequestURL();
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/home.jsp");
-        dispatcher.forward(req, resp);
+        getServletContext().getRequestDispatcher("/jsp/home.jsp").forward(req, resp);
     }
 }

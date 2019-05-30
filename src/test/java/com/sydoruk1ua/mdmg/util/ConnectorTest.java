@@ -1,6 +1,5 @@
-package com.sydoruk1ua.mdmg.model.dao.impl;
+package com.sydoruk1ua.mdmg.util;
 
-import com.sydoruk1ua.mdmg.util.Connector;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
@@ -8,7 +7,7 @@ import static org.junit.Assert.assertNotNull;
 public class ConnectorTest {
 
     @Test
-    public void shouldCreateConnection() {
+    public void shouldInstallConnection() {
         assertNotNull(Connector.getConnection());
     }
 }

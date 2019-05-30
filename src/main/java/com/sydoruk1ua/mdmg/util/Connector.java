@@ -5,12 +5,10 @@ import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
 public final class Connector {
-    private final static Logger LOGGER = Logger.getLogger(Connector.class);
+    private static final Logger LOGGER = Logger.getLogger(Connector.class);
     private static final BasicDataSource DATA_SOURCE = new BasicDataSource();
-    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle("db");
 
     private Connector() {
     }
@@ -22,19 +20,19 @@ public final class Connector {
             return DATA_SOURCE.getConnection();
         } catch (SQLException e) {
             LOGGER.error(e);
-            throw new RuntimeException(e); //TODO: write own Exception
+            throw new RuntimeException(e); //TODO: write own Exception and find out how to handle it
         }
     }
 
     private static void configConnection() {
         LOGGER.debug("entered");
-        DATA_SOURCE.setDriverClassName(RESOURCE_BUNDLE.getString("db.driver"));
-        DATA_SOURCE.setUrl(RESOURCE_BUNDLE.getString("db.url"));
-        DATA_SOURCE.setUsername(RESOURCE_BUNDLE.getString("db.username"));
-        DATA_SOURCE.setPassword(RESOURCE_BUNDLE.getString("db.password"));
-        DATA_SOURCE.setMinIdle(Integer.parseInt(RESOURCE_BUNDLE.getString("db.min.idle")));
-        DATA_SOURCE.setMaxIdle(Integer.parseInt(RESOURCE_BUNDLE.getString("db.max.idle")));
-        DATA_SOURCE.setMaxOpenPreparedStatements(Integer.parseInt(RESOURCE_BUNDLE.getString(
+        DATA_SOURCE.setDriverClassName(ConfigurationManager.getProperty("db.driver"));
+        DATA_SOURCE.setUrl(ConfigurationManager.getProperty("db.url"));
+        DATA_SOURCE.setUsername(ConfigurationManager.getProperty("db.username"));
+        DATA_SOURCE.setPassword(ConfigurationManager.getProperty("db.password"));
+        DATA_SOURCE.setMinIdle(Integer.parseInt(ConfigurationManager.getProperty("db.min.idle")));
+        DATA_SOURCE.setMaxIdle(Integer.parseInt(ConfigurationManager.getProperty("db.max.idle")));
+        DATA_SOURCE.setMaxOpenPreparedStatements(Integer.parseInt(ConfigurationManager.getProperty(
                 "db.max.open.prepare.statement")));
     }
 }

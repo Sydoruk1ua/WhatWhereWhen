@@ -62,6 +62,6 @@
     </form>
 </div>
 <%--FOOTER--%>
-<c:import url="common/footer.jsp" charEncoding="UTF-8"/>
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>

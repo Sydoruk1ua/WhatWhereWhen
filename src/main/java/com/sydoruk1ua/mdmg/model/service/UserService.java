@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
+
     void create(User user);
 
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByEmailAndPassword(String email, String password);
 
     List<User> findAll();
 
