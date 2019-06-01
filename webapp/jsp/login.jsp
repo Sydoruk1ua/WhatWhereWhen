@@ -1,14 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
-
-<link rel="stylesheet" href="<c:url value="/css1/bootstrap.min.css"/>"/>
-<link rel="stylesheet" href="<c:url value="/css/style.css"/>"/>
-<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
-
 <html>
 <head>
     <title>Login</title>
+    <link rel="stylesheet" href="<c:url value="/css/style.css"/>"/>
 </head>
 <body>
 <%--HEADER--%>
@@ -19,7 +15,7 @@
         <div id="login-row" class="row justify-content-center align-items-center">
             <div id="login-column" class="col-md-6">
                 <div id="login-box" class="col-md-12">
-                    <form id="login-form" class="form" action="controller" method="post">
+                    <form id="login-form" class="form" action="app" method="post">
                         <input type="hidden" name="command" value="login"/>
                         <h3 class="text-center text-info">Sign In</h3>
                         <div class="form-group">
@@ -43,5 +39,8 @@
 
 <%--FOOTER--%>
 <jsp:include page="common/footer.jsp"/>
+
+
+<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 </body>
 </html>

@@ -10,7 +10,13 @@ public class ConnectorTest {
 
     @Test
     public void shouldInstallConnection() {
+
         try {
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
             assertTrue(Connector.getConnection().isValid(1));
         } catch (SQLException e) {
             e.printStackTrace();

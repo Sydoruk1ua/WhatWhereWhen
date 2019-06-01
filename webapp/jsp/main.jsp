@@ -2,17 +2,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <html>
+<head>
+    <title>Main</title>
+</head>
 <body>
-<%--HEADER--%>
+<%--HADER--%>
 <jsp:include page="common/header.jsp"/>
-<fmt:message key="welcome.user"/>
-Home
+<fmt:message key="welcome.user"/> Home
 <%--<a href="controller">Main Controller</a>--%>
 <form action="users" method="POST">
     <input type="submit" value="Users">
 </form>
-<form action="controller">
-    <input type="hidden" name="command" value="login.page"/>
+<a href="app">Return to login page</a>
+<form action="app">
+    <input type="hidden" name="command" value="login_page"/>
     <input type="submit" value="Sign in">
 </form>
 
@@ -20,7 +23,7 @@ Home
     <input type="submit" value="Sign up">
 </form>
 
-<form action="controller" method="POST">
+<form action="app" method="POST">
     <input type="hidden" name="command" value="questions"/>
     <input type="submit" value="Questions">
 </form>

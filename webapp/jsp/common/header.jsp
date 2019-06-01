@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>"/>
 <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 
-<c:set var="language" scope="session" value="${empty sessionScope.lang ? 'en_EN' : sessionScope.lang}"/>
+<c:set var="language" value="${not empty sessionScope.lang ? sessionScope.lang : 'en' }" scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="i18n" scope="session"/>
 
@@ -13,24 +13,30 @@
     <div class="container-fluid">
         <div class="row">
             <nav class="navbar bg-dark navbar-expand-md navbar-light col justify-content-between">
-                <form action="controller" class="text-light navbar-brand">
-                    <input type="hidden" name="command" value="main.page"/>
-                    <input type="submit" value=<fmt:message key="home"/>>
+                <form action="app" class="text-light navbar-brand">
+                    <input type="hidden" name="command" value="main_page"/>
+                    <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="home"/>>
                 </form>
 
 
-                <%-- <c:if test="${not empty sessionScope.user}">
-                     <h6 class="nav-item text-light"><fmt:message key="welcome.user"/>
-                             ${sessionScope.user.firstName}</h6>
-                 </c:if>--%>
+                <c:if test="${not empty sessionScope.user}">
+                    <h6 class="nav-item text-light"><fmt:message key="welcome.user"/>
+                            ${sessionScope.user}</h6>
+                </c:if>
                 <div class="navbar-nav">
-                    <c:if test="${language == 'en_EN'}">
-                        <c:out value="TEST">TEST2</c:out>
-                        TestEN
+                    <c:if test="${empty sessionScope.user}">
+                        <form action="app" class="text-light navbar-brand">
+                            <input type="hidden" name="command" value="login_page"/>
+                            <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="login"/>>
+                        </form>
                     </c:if>
-                    <c:if test="${language == 'ru_RU'}">
-                        <c:out value="TEST">TEST2</c:out>
-                        TestRU
+
+
+                    <c:if test="${not empty sessionScope.user}">
+                        <form action="app" class="text-light navbar-brand">
+                            <input type="hidden" name="command" value="logout"/>
+                            <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="logout"/>>
+                        </form>
                     </c:if>
                     <%-- <c:if test="${sessionScope.user.role.get() == 'CLIENT'}">
                          <a href="<c:url value="/app/client/newReportPage"/>" class="nav-item nav-link text-light">
@@ -59,12 +65,13 @@
                              <fmt:message key="logout" bundle="${bundle}"/></a>
                      </c:if>--%>
                     <div class="nav-item">
-                        <form action="<c:url value="/language"/>">
+                        <form action="app">
+                            <input type="hidden" name="command" value="language"/>
                             <select class="input-group" name="lang" onchange="this.form.submit()">
-                                <option value="en_EN" ${sessionScope.lang == 'en_EN' ? 'selected="selected"' : ''}>
+                                <option value="en" ${sessionScope.lang == 'en' ? 'selected="selected"' : ''}>
                                     English
                                 </option>
-                                <option value="ru_RU" ${sessionScope.lang == 'ru_RU' ? 'selected="selected"' : ''}>
+                                <option value="ru" ${sessionScope.lang == 'ru' ? 'selected="selected"' : ''}>
                                     Русский
                                 </option>
                             </select>

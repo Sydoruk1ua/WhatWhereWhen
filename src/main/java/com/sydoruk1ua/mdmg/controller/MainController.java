@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/controller")
+@WebServlet("/app")
 public class MainController extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(MainController.class);
     private static final RequestContext REQUEST_HELPER = RequestContext.getInstance();
