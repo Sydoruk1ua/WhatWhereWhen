@@ -22,11 +22,13 @@ public class RequestContext {
 
     private RequestContext() {
         commands.put("login", new LoginCommand(userService));
+        commands.put("logout", new LogoutCommand());
         commands.put("questions", new QuestionCommand(questionService));
+        commands.put("language", new LanguageCommand());
 
         // Commands for redirect to concrete pages
-        commands.put("login.page", (req, res) -> ConfigurationManager.getProperty("login.page.path"));
-        commands.put("main.page", (req, res) -> ConfigurationManager.getProperty("main.page.path"));
+        commands.put("login_page", (req, res) -> ConfigurationManager.getProperty("login.page.path"));
+        commands.put("main_page", (req, res) -> ConfigurationManager.getProperty("main.page.path"));
     }
 
 

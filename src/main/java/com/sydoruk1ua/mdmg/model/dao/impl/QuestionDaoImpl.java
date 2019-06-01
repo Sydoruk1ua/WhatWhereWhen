@@ -60,7 +60,7 @@ public class QuestionDaoImpl implements QuestionDao {
                 .withQuestionEn(resultSet.getString("question_en"))
                 .withQuestionRu(resultSet.getString("question_ru"))
                 .withPromptEn(resultSet.getString("prompt_en"))
-                .withQuestionRu(resultSet.getString("prompt_ru"))
+                .withPromptRu(resultSet.getString("prompt_ru"))
                 .build();
     }
 
