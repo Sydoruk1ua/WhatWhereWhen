@@ -1,5 +1,6 @@
 package com.sydoruk1ua.mdmg;
 
+import com.sydoruk1ua.mdmg.model.dao.impl.QuestionDaoImpl;
 import com.sydoruk1ua.mdmg.util.MessageManager;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
@@ -25,5 +26,6 @@ public class JustForSomeTests {
         assertTrue("natalyatra chpaS1.&".matches(PASSWORD_REGEX));
         assertTrue("natalyatraК chpaS1.&".matches(PASSWORD_REGEX));
         assertTrue("natalyatraпё chpaS1.&".matches(PASSWORD_REGEX));
+        System.out.println(new QuestionDaoImpl().findAll().size());
     }
 }

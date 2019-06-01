@@ -22,8 +22,6 @@ public class LanguageServlet extends HttpServlet {
         } else {
             req.getSession().setAttribute(LANG, RU);
         }
-        StringBuffer requestURL = req.getRequestURL();
-
         getServletContext().getRequestDispatcher("/jsp/home.jsp").forward(req, resp);
     }
 }

@@ -8,31 +8,27 @@ import java.sql.SQLException;
 
 public final class Connector {
     private static final Logger LOGGER = Logger.getLogger(Connector.class);
-    private static final BasicDataSource DATA_SOURCE = new BasicDataSource();
+    private static BasicDataSource dataSource = new BasicDataSource();
 
     private Connector() {
     }
 
-    public static Connection getConnection() {
-        try {
-            configConnection();
-            LOGGER.debug("entered");
-            return DATA_SOURCE.getConnection();
-        } catch (SQLException e) {
-            LOGGER.error(e);
-            throw new RuntimeException(e); //TODO: write own Exception and find out how to handle it
-        }
+    public static Connection getConnection() throws SQLException {
+        configConnection();
+        LOGGER.debug("entered");
+        return dataSource.getConnection();
     }
 
     private static void configConnection() {
         LOGGER.debug("entered");
-        DATA_SOURCE.setDriverClassName(ConfigurationManager.getProperty("db.driver"));
-        DATA_SOURCE.setUrl(ConfigurationManager.getProperty("db.url"));
-        DATA_SOURCE.setUsername(ConfigurationManager.getProperty("db.username"));
-        DATA_SOURCE.setPassword(ConfigurationManager.getProperty("db.password"));
-        DATA_SOURCE.setMinIdle(Integer.parseInt(ConfigurationManager.getProperty("db.min.idle")));
-        DATA_SOURCE.setMaxIdle(Integer.parseInt(ConfigurationManager.getProperty("db.max.idle")));
-        DATA_SOURCE.setMaxOpenPreparedStatements(Integer.parseInt(ConfigurationManager.getProperty(
+        dataSource.setDriverClassName(ConfigurationManager.getProperty("db.driver"));
+        dataSource.setUrl(ConfigurationManager.getProperty("db.url"));
+        dataSource.setUsername(ConfigurationManager.getProperty("db.username"));
+        dataSource.setPassword(ConfigurationManager.getProperty("db.password"));
+        dataSource.setMinIdle(Integer.parseInt(ConfigurationManager.getProperty("db.min.idle")));
+        dataSource.setMaxIdle(Integer.parseInt(ConfigurationManager.getProperty("db.max.idle")));
+        dataSource.setMaxOpenPreparedStatements(Integer.parseInt(ConfigurationManager.getProperty(
                 "db.max.open.prepare.statement")));
+        LOGGER.debug("exit");
     }
 }

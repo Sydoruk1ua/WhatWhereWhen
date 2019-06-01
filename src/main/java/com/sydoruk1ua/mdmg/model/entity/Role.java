@@ -3,8 +3,8 @@ package com.sydoruk1ua.mdmg.model.entity;
 import java.util.Objects;
 
 public class Role {
-    private Integer id;
-    private String type;
+    private final Integer id;
+    private final String type;
 
     public Role(Integer id, String type) {
         this.id = id;

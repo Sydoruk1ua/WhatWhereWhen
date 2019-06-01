@@ -31,7 +31,7 @@ public class UserServiceImplTest {
     private UserServiceImpl userService;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         user = Optional.of(User.builder()
                 .withId(1)
                 .withEmail(EMAIL)

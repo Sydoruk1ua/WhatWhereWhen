@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 
-<link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>"/>
+<link rel="stylesheet" href="<c:url value="/css1/bootstrap.min.css"/>"/>
 <link rel="stylesheet" href="<c:url value="/css/style.css"/>"/>
 <script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 

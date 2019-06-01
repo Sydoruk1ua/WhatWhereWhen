@@ -13,16 +13,25 @@
     <div class="container-fluid">
         <div class="row">
             <nav class="navbar bg-dark navbar-expand-md navbar-light col justify-content-between">
-                <form action="home" class="text-light navbar-brand">
+                <form action="controller" class="text-light navbar-brand">
+                    <input type="hidden" name="command" value="main.page"/>
                     <input type="submit" value=<fmt:message key="home"/>>
                 </form>
+
 
                 <%-- <c:if test="${not empty sessionScope.user}">
                      <h6 class="nav-item text-light"><fmt:message key="welcome.user"/>
                              ${sessionScope.user.firstName}</h6>
                  </c:if>--%>
                 <div class="navbar-nav">
-
+                    <c:if test="${language == 'en_EN'}">
+                        <c:out value="TEST">TEST2</c:out>
+                        TestEN
+                    </c:if>
+                    <c:if test="${language == 'ru_RU'}">
+                        <c:out value="TEST">TEST2</c:out>
+                        TestRU
+                    </c:if>
                     <%-- <c:if test="${sessionScope.user.role.get() == 'CLIENT'}">
                          <a href="<c:url value="/app/client/newReportPage"/>" class="nav-item nav-link text-light">
                              <fmt:message key="create.report" bundle="${bundle}"/></a>

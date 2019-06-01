@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@FunctionalInterface            //TODO: think do I really need this?
+@FunctionalInterface
 public interface Command {
     String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 }
