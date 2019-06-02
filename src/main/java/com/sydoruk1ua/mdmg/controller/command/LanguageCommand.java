@@ -2,10 +2,8 @@ package com.sydoruk1ua.mdmg.controller.command;
 
 import com.sydoruk1ua.mdmg.util.ConfigurationManager;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class LanguageCommand implements Command {
     private static final String LANG = "lang";
@@ -13,8 +11,7 @@ public class LanguageCommand implements Command {
     private static final String RU = "ru";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
         String lang = request.getParameter(LANG);
 
         if (lang.equals(EN)) {

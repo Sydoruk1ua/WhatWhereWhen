@@ -41,7 +41,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void create(User entity) {
+    public void create(User user) {
+
         throw new UnsupportedOperationException();
     }
 

@@ -1,7 +1,7 @@
 package com.sydoruk1ua.mdmg.controller;
 
 import com.sydoruk1ua.mdmg.controller.command.Command;
-import com.sydoruk1ua.mdmg.controller.command.RequestContext;
+import com.sydoruk1ua.mdmg.controller.command.CommandController;
 import com.sydoruk1ua.mdmg.util.ConfigurationManager;
 import com.sydoruk1ua.mdmg.util.MessageManager;
 import org.apache.log4j.Logger;
@@ -17,7 +17,7 @@ import java.io.IOException;
 @WebServlet("/app")
 public class MainController extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(MainController.class);
-    private static final RequestContext REQUEST_HELPER = RequestContext.getInstance();
+    private static final CommandController COMMAND_CONTROLLER = CommandController.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,7 +35,7 @@ public class MainController extends HttpServlet {
         String page = null;
 
         try {
-            Command command = REQUEST_HELPER.getCommand(request);
+            Command command = COMMAND_CONTROLLER.getCommand(request);
             page = command.execute(request, response);
         } catch (ServletException e) {
             LOGGER.error(e.getMessage(), e);

@@ -19,7 +19,8 @@
     <input type="submit" value="Sign in">
 </form>
 
-<form action="registration" method="POST">
+<form action="app">
+    <input type="hidden" name="command" value="registration_page"/>
     <input type="submit" value="Sign up">
 </form>
 
