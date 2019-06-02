@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 public class GetAllQuestionsCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(GetAllQuestionsCommand.class);
     private QuestionService questionService;

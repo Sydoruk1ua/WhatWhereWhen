@@ -12,6 +12,7 @@ public class LanguageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+
         String lang = request.getParameter(LANG);
 
         if (lang.equals(EN)) {
