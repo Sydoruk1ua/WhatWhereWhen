@@ -26,9 +26,12 @@ public class LoginCommand implements Command {
 
         String email = request.getParameter(PARAM_NAME_EMAIL);
         String pass = request.getParameter(PARAM_NAME_PASSWORD);
+        LOGGER.debug(email);
+        LOGGER.debug(pass);
 
         Optional<User> optionalUser = userService.findByEmailAndPassword(email, pass);
         if (optionalUser.isPresent()) {
+            LOGGER.debug("User is present");
             User user = optionalUser.get();
             request.getSession().setAttribute("user", user.getEmail());
             request.getSession().setAttribute("userRole", user.getRole().getType());

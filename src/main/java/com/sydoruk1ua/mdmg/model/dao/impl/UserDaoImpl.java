@@ -21,6 +21,8 @@ public class UserDaoImpl implements UserDao {
             "u.role_id, r.type AS role_type\n" +
             "FROM users AS u JOIN roles AS r ON u.role_id = r.id " +
             "WHERE u.email = ?";
+    private static final String INSERT_USER = "INSERT INTO users (email, password, first_name, last_name, role_id) " +
+            "VALUES (?, ?, ?, ?, ?)";
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 
     @Override
@@ -42,8 +44,16 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void create(User user) {
-
-        throw new UnsupportedOperationException();
+        try (PreparedStatement preparedStatement = Connector.getConnection().prepareStatement(INSERT_USER)) {
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getFirstName());
+            preparedStatement.setString(4, user.getLastName());
+            preparedStatement.setInt(5, user.getRole().getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
     }
 
     @Override

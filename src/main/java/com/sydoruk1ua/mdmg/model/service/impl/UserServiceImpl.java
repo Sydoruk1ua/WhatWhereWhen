@@ -1,6 +1,7 @@
 package com.sydoruk1ua.mdmg.model.service.impl;
 
 import com.sydoruk1ua.mdmg.model.dao.UserDao;
+import com.sydoruk1ua.mdmg.model.entity.Role;
 import com.sydoruk1ua.mdmg.model.entity.User;
 import com.sydoruk1ua.mdmg.model.service.UserService;
 import com.sydoruk1ua.mdmg.util.PasswordEncryptor;
@@ -18,7 +19,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void create(User user) {
         String encodedPassword = PasswordEncryptor.encrypt(user.getPassword());
-        //   userDao.create(); //TODO:
+        User userToDb = User.builder()
+                .withEmail(user.getEmail())
+                .withFirstName(user.getFirstName())
+                .withLastName(user.getLastName())
+                .withPassword(encodedPassword)
+                .withRole(getRoleByType("user"))
+                .build();
+        userDao.create(userToDb);
     }
 
     @Override
@@ -49,5 +57,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(Integer id) {
         throw new UnsupportedOperationException();
+    }
+
+    private Role getRoleByType(String type) {
+        switch (type) {
+            case "admin":
+                return new Role(1, "admin");
+            case "judge":
+                return new Role(3, "judge");
+            default:
+                return new Role(2, "user");
+        }
     }
 }

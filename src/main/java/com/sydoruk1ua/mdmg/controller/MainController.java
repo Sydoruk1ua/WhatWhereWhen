@@ -31,9 +31,10 @@ public class MainController extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         String page = null;
-
+        LOGGER.debug("entered");
         try {
             Command command = COMMAND_CONTROLLER.getCommand(request);
             page = command.execute(request, response);

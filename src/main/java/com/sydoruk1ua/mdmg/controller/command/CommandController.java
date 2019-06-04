@@ -7,12 +7,14 @@ import com.sydoruk1ua.mdmg.model.service.UserService;
 import com.sydoruk1ua.mdmg.model.service.impl.QuestionServiceImpl;
 import com.sydoruk1ua.mdmg.model.service.impl.UserServiceImpl;
 import com.sydoruk1ua.mdmg.util.ConfigurationManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandController {
+    private static final Logger LOGGER = Logger.getLogger(CommandController.class);
     private static CommandController instance;
     private final UserService userService = new UserServiceImpl(new UserDaoImpl());
     private final QuestionService questionService = new QuestionServiceImpl(new QuestionDaoImpl());
@@ -45,8 +47,9 @@ public class CommandController {
 
     public Command getCommand(HttpServletRequest request) {
         String action = request.getParameter("command");
-
+        LOGGER.debug("action " + action);
         Command command = commands.get(action);
+        LOGGER.debug("command " + command);
         if (command == null) {
             command = new NoCommand();
         }

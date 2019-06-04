@@ -73,7 +73,9 @@
 <script type="text/javascript" src="../js/addons/datatables.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#userTable').DataTable();
+        $('#userTable').DataTable({
+            "pagingType": "full_numbers"
+        });
         $('.dataTables_length').addClass('bs-select');
     });
 </script>

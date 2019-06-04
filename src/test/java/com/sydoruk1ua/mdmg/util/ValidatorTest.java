@@ -2,8 +2,7 @@ package com.sydoruk1ua.mdmg.util;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class ValidatorTest {
 
@@ -19,5 +18,14 @@ public class ValidatorTest {
         String emailWithLength46 = "user12345678912345678912345678912345@gmail.com";
         assertFalse(Validator.isEmailValid(null));
         assertFalse(Validator.isEmailValid(emailWithLength46));
+        assertFalse(Validator.isEmailValid("олександр@gmail.com"));
+    }
+
+    @Test
+    public void shouldValidateFirsName() {
+        String nameEN = "Alex";
+        String nameRU = "Олександр";
+        assertTrue(Validator.isFirstNameValid(nameEN));
+        assertTrue(Validator.isFirstNameValid(nameRU));
     }
 }

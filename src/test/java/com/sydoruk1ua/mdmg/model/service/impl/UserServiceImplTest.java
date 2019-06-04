@@ -28,7 +28,7 @@ public class UserServiceImplTest {
             .withPassword(ENCODED_PASSWORD)
             .withFirstName("User1")
             .withLastName("UserLast1")
-            .withRole(new Role(2, "optionalUser"))
+            .withRole(new Role(2, "user"))
             .build());;
 
     @Mock

@@ -21,8 +21,11 @@
                         </div>
                         <div class="form-group">
                             <label for="password" class="text-info">Password:</label><br>
-                            <input type="text" name="password" id="password" class="form-control" required
-                                   pattern="^(?=.*?[A-ZА-Я])(?=.*?[a-zа-я])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,45}$">
+                            <input type="password" name="password" id="password" class="form-control" required
+                                   pattern="^(?=.*?[A-ZА-Я])(?=.*?[a-zа-я])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,45}$"
+                                   title="Password must contain:At least one upper case letter,
+At least one lower case letter, At least one digit, At least one special character(?=.*?[#?!@$%^&*-]),
+Length must be between 6 and 45 characters">
                         </div>
                         <div id="login-link" class="text-left">
                             <input type="submit" name="submit" class="btn btn-info btn-md" value="Sign In">
