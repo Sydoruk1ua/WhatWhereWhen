@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public final class Connector {
     private static final Logger LOGGER = Logger.getLogger(Connector.class);
-    private static BasicDataSource dataSource = new BasicDataSource();
+    private static BasicDataSource dataSource;
 
     private Connector() {
     }
@@ -21,14 +21,12 @@ public final class Connector {
 
     private static void configConnection() {
         LOGGER.debug("entered");
-        dataSource.setDriverClassName(ConfigurationManager.getProperty("db.driver"));
-        dataSource.setUrl(ConfigurationManager.getProperty("db.url"));
-        dataSource.setUsername(ConfigurationManager.getProperty("db.username"));
-        dataSource.setPassword(ConfigurationManager.getProperty("db.password"));
-        dataSource.setMinIdle(Integer.parseInt(ConfigurationManager.getProperty("db.min.idle")));
-        dataSource.setMaxIdle(Integer.parseInt(ConfigurationManager.getProperty("db.max.idle")));
-        dataSource.setMaxOpenPreparedStatements(Integer.parseInt(ConfigurationManager.getProperty(
-                "db.max.open.prepare.statement")));
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName(ConfigurationManager.getProperty("db.driver"));
+        ds.setUrl(ConfigurationManager.getProperty("db.url"));
+        ds.setUsername(ConfigurationManager.getProperty("db.username"));
+        ds.setPassword(ConfigurationManager.getProperty("db.password"));
+        dataSource = ds;
         LOGGER.debug("exit");
     }
 }

@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.util.Optional;
 
 import static com.sydoruk1ua.mdmg.util.Validator.*;
@@ -31,13 +31,10 @@ public class RegistrationCommand implements Command {
     }
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.warn("UTF-8 is not supported");
-        }
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         Optional<User> optionalUser = getValidOptionalUser(request);
         if (!optionalUser.isPresent()) {
             LOGGER.debug("Registration failed because of invalid data");
@@ -66,7 +63,7 @@ public class RegistrationCommand implements Command {
         String firstName = request.getParameter(FIRST_NAME);
         String lastName = request.getParameter(LAST_NAME);
         if (!isEmailValid(email)) {
-            LOGGER.debug(MessageManager.getProperty("error.incorrect.email")  + " " + email);
+            LOGGER.debug(MessageManager.getProperty("error.incorrect.email") + " " + email);
             request.getSession().setAttribute(INVALID_REGISTRATION_DATA,
                     MessageManager.getProperty("error.incorrect.email"));
             return Optional.empty();
