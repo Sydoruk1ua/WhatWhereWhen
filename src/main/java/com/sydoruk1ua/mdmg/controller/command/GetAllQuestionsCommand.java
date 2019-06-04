@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GetAllQuestionsCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(GetAllQuestionsCommand.class);
-    private QuestionService questionService;
+    private final QuestionService questionService;
 
     public GetAllQuestionsCommand(QuestionService questionService) {
         this.questionService = questionService;

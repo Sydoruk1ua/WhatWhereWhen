@@ -23,30 +23,30 @@
 <jsp:include page="common/header.jsp"/>
 <div class="container">
     <h2>Users</h2>
-    <form action="/users" method="post" id="userForm" role="form">
-        <c:choose>
-        <c:when test="${not empty usersList}">
-        <table id="userTable" class="table table-striped table-bordered table-sm table-dark">
-                <%--class="table table-striped"--%>
-            <thead>
+
+    <c:choose>
+    <c:when test="${not empty usersList}">
+    <table id="userTable" class="table table-striped table-bordered table-sm table-dark">
+            <%--class="table table-striped"--%>
+        <thead>
+        <tr>
+            <td>#</td>
+            <td>email</td>
+            <td>First name</td>
+            <td>Last name</td>
+            <td>Role</td>
+        </tr>
+        </thead>
+        <c:forEach var="user" items="${usersList}">
             <tr>
-                <td>#</td>
-                <td>email</td>
-                <td>First name</td>
-                <td>Last name</td>
-                <td>Role</td>
+                <td>${user.id}</td>
+                <td>${user.email}</td>
+                <td>${user.firstName}</td>
+                <td>${user.lastName}</td>
+                <td>${user.role.type}</td>
             </tr>
-            </thead>
-            <c:forEach var="user" items="${usersList}">
-                <tr>
-                    <td>${user.id}</td>
-                    <td>${user.email}</td>
-                    <td>${user.firstName}</td>
-                    <td>${user.lastName}</td>
-                    <td>${user.role.type}</td>
-                </tr>
-            </c:forEach>
-        </table>
+        </c:forEach>
+    </table>
 </div>
 </c:when>
 <c:otherwise>
@@ -56,7 +56,7 @@
     </div>
 </c:otherwise>
 </c:choose>
-</form>
+
 </div>
 <%--FOOTER--%>
 <jsp:include page="common/footer.jsp"/>

@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="<c:url value="/css/style.css"/>"/>
-<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
 <html>
+<head>
+    <title>Sign up</title>
+</head>
+<body>
+<%--HEADER--%>
 <jsp:include page="common/header.jsp"/>
 <div id="register">
     <h3 class="text-center text-white pt-5">Login form</h3>
@@ -10,7 +13,8 @@
         <div id="register-row" class="row justify-content-center align-items-center">
             <div id="register-column" class="col-md-6">
                 <div id="register-box" class="col-md-12">
-                    <form id="register-form" class="form" action="" method="post">
+                    <form id="register-form" class="form" action="app" method="POST">
+                        <input type="hidden" name="command" value="registration"/>
                         <h3 class="text-center text-info">Register</h3>
                         <div class="form-group">
                             <label for="first_name" class="text-info">First Name:</label><br>
@@ -48,6 +52,5 @@ Length must be between 6 and 45 characters">
         </div>
     </div>
 </div>
-
-
+</body>
 </html>

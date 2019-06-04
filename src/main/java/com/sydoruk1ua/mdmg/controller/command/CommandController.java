@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandController {
-    private static CommandController instance = null;
+    private static CommandController instance;
     private final UserService userService = new UserServiceImpl(new UserDaoImpl());
     private final QuestionService questionService = new QuestionServiceImpl(new QuestionDaoImpl());
 
@@ -26,6 +26,7 @@ public class CommandController {
         commands.put("registration", new RegistrationCommand(userService));
         commands.put("questions", new GetAllQuestionsCommand(questionService));
         commands.put("language", new LanguageCommand());
+        commands.put("users", new GetAllUsersCommand(userService));
 
         // Commands for redirect to concrete pages
         commands.put("login_page", (req, res) -> ConfigurationManager.getProperty("login.page.path"));

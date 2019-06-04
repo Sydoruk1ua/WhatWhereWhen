@@ -14,7 +14,7 @@ public class LoginCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
     private static final String PARAM_NAME_EMAIL = "email";
     private static final String PARAM_NAME_PASSWORD = "password";
-    private UserService userService;
+    private final UserService userService;
 
     public LoginCommand(UserService userService) {
         this.userService = userService;
@@ -26,7 +26,6 @@ public class LoginCommand implements Command {
 
         String email = request.getParameter(PARAM_NAME_EMAIL);
         String pass = request.getParameter(PARAM_NAME_PASSWORD);
-
 
         Optional<User> optionalUser = userService.findByEmailAndPassword(email, pass);
         if (optionalUser.isPresent()) {

@@ -9,8 +9,8 @@
 <%--HADER--%>
 <jsp:include page="common/header.jsp"/>
 <fmt:message key="welcome.user"/> Home
-<%--<a href="controller">Main Controller</a>--%>
-<form action="users" method="POST">
+<form action="app" method="POST">
+    <input type="hidden" name="command" value="users"/>
     <input type="submit" value="Users">
 </form>
 <a href="app">Return to login page</a>
@@ -28,15 +28,7 @@
     <input type="hidden" name="command" value="questions"/>
     <input type="submit" value="Questions">
 </form>
-
-
 <%--FOOTER--%>
-<footer class="py-0 bg-dark fixed-bottom">
-    <!-- Copyright -->
-    <div class="text-center py-3 text-white-50">© 2019 Copyright:
-        <a href="https://github.com/Sydoruk1ua/WhatWhereWhen"> Sydoruk1ua</a>
-    </div>
-    <!-- Copyright -->
-</footer>
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>
