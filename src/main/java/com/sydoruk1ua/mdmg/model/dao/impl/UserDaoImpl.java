@@ -41,7 +41,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void create(User entity) {
+    public void create(User user) {
+
         throw new UnsupportedOperationException();
     }
 
@@ -55,7 +56,6 @@ public class UserDaoImpl implements UserDao {
         List<User> listOfAllUsers = new ArrayList<>();
         try (PreparedStatement preparedStatement = Connector.getConnection().prepareStatement(FIND_ALL_USERS);
              ResultSet resultSet = preparedStatement.executeQuery()) {
-
             if (resultSet.next()) {
                 do {
                     listOfAllUsers.add(getUser(resultSet));

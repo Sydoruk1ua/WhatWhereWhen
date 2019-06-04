@@ -1,26 +1,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Main</title>
 </head>
 <body>
-<%--HEADER--%>
+<%--HADER--%>
 <jsp:include page="common/header.jsp"/>
-<fmt:message key="welcome.user"/>
-Home
-<a href="controller">Main Controller</a>
-<form action="users" method="POST">
+<fmt:message key="welcome.user"/> Home
+<form action="app" method="POST">
+    <input type="hidden" name="command" value="users"/>
     <input type="submit" value="Users">
 </form>
-<form action="login" method="POST">
+<a href="app">Return to login page</a>
+<form action="app">
+    <input type="hidden" name="command" value="login_page"/>
     <input type="submit" value="Sign in">
 </form>
 
-<form action="registration" method="POST">
+<form action="app">
+    <input type="hidden" name="command" value="registration_page"/>
     <input type="submit" value="Sign up">
 </form>
 
+<form action="app" method="POST">
+    <input type="hidden" name="command" value="questions"/>
+    <input type="submit" value="Questions">
+</form>
 <%--FOOTER--%>
 <jsp:include page="common/footer.jsp"/>
 </body>

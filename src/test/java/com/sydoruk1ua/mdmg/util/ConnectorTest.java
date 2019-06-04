@@ -2,12 +2,24 @@ package com.sydoruk1ua.mdmg.util;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
+import java.sql.SQLException;
+
+import static org.junit.Assert.assertTrue;
 
 public class ConnectorTest {
 
     @Test
     public void shouldInstallConnection() {
-        assertNotNull(Connector.getConnection());
+
+        try {
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
+            assertTrue(Connector.getConnection().isValid(1));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

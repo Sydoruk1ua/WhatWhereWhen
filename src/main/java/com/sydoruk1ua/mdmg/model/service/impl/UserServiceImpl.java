@@ -3,7 +3,7 @@ package com.sydoruk1ua.mdmg.model.service.impl;
 import com.sydoruk1ua.mdmg.model.dao.UserDao;
 import com.sydoruk1ua.mdmg.model.entity.User;
 import com.sydoruk1ua.mdmg.model.service.UserService;
-import org.apache.commons.codec.digest.DigestUtils;
+import com.sydoruk1ua.mdmg.util.PasswordEncryptor;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void create(User user) {
-        throw new UnsupportedOperationException();
+        String encodedPassword = PasswordEncryptor.encrypt(user.getPassword());
+        //   userDao.create(); //TODO:
     }
 
     @Override
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
-        String encodedPassword = DigestUtils.md2Hex(password);
+        String encodedPassword = PasswordEncryptor.encrypt(password);
         Optional<User> user = findByEmail(email);
         if (user.isPresent() && user.get().getPassword().equals(encodedPassword)) {
             return user;
