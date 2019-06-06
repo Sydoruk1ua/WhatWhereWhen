@@ -43,4 +43,36 @@ public final class Validator {
     public static boolean isLastNameValid(String lastName) {
         return lastName != null && lastName.matches(LAST_NAME_REGEX);
     }
+
+    public static boolean isQuestionTypeValid(String questionType) {
+        return "single".equals(questionType) || "multi".equals(questionType);
+    }
+
+    public static boolean isQuestionEnValid(String questionEn) {
+        return questionEn != null && questionEn.length() <= 450;
+    }
+
+    public static boolean isQuestionRuValid(String questionRu) {
+        return questionRu != null && questionRu.length() <= 450;
+    }
+
+    public static boolean isQuestionPromptEnValid(String promptEn) {
+        return promptEn != null && promptEn.length() <= 200;
+    }
+
+    public static boolean isQuestionPromptRuValid(String promptRu) {
+        return promptRu != null && promptRu.length() <= 200;
+    }
+
+    public static boolean isAnswerEnValid(String answerEn) {
+        return answerEn != null && answerEn.length() <= 100;
+    }
+
+    public static boolean isAnswerRuValid(String answerRu) {
+        return answerRu != null && answerRu.length() <= 100;
+    }
+
+    public static boolean isFieldIsCorrectValid(String isCorrect) {
+        return "no".equals(isCorrect) || "yes".equals(isCorrect);
+    }
 }

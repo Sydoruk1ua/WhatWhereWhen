@@ -1,7 +1,6 @@
 package com.sydoruk1ua.mdmg.controller;
 
 import com.sydoruk1ua.mdmg.controller.command.Command;
-import com.sydoruk1ua.mdmg.controller.command.CommandController;
 import com.sydoruk1ua.mdmg.util.ConfigurationManager;
 import com.sydoruk1ua.mdmg.util.MessageManager;
 import org.apache.log4j.Logger;
@@ -33,7 +32,7 @@ public class MainController extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        String page = null;
+        String page;
         LOGGER.debug("entered");
         try {
             Command command = COMMAND_CONTROLLER.getCommand(request);

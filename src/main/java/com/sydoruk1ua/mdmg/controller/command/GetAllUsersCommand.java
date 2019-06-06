@@ -19,6 +19,6 @@ public class GetAllUsersCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("usersList", userService.findAll());
         LOGGER.debug("Count of all users: " + userService.findAll().size());
-        return ConfigurationManager.getProperty("users.page.path");
+        return ConfigurationManager.getProperty("users.list.page.path");
     }
 }

@@ -1,7 +1,9 @@
 package com.sydoruk1ua.mdmg.controller.command;
 
+import com.sydoruk1ua.mdmg.model.entity.Role;
 import com.sydoruk1ua.mdmg.model.entity.User;
 import com.sydoruk1ua.mdmg.model.service.UserService;
+import com.sydoruk1ua.mdmg.util.AttributeManager;
 import com.sydoruk1ua.mdmg.util.ConfigurationManager;
 import com.sydoruk1ua.mdmg.util.MessageManager;
 import org.apache.log4j.Logger;
@@ -15,6 +17,7 @@ import static com.sydoruk1ua.mdmg.util.Validator.*;
 
 public class RegistrationCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(RegistrationCommand.class);
+    private static final String REGISTRATION_PAGE_PATH = "registration.page.path";
     //parameters
     private static final String EMAIL = "email";
     private static final String PASSWORD = "password";
@@ -22,8 +25,7 @@ public class RegistrationCommand implements Command {
     private static final String LAST_NAME = "last_name";
     private static final String PASSWORD_REPEAT = "password_repeat";
     //attributes
-    private static final String INVALID_REGISTRATION_DATA = "invalid_registration_data";
-
+    private static final String INVALID_REGISTRATION_DATA = AttributeManager.getProperty("invalid.registration.data");
     private final UserService userService;
 
     public RegistrationCommand(UserService userService) {
@@ -32,27 +34,30 @@ public class RegistrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
 
         Optional<User> optionalUser = getValidOptionalUser(request);
         if (!optionalUser.isPresent()) {
             LOGGER.debug("Registration failed because of invalid data");
-            return ConfigurationManager.getProperty("registration.page.path");
+            return ConfigurationManager.getProperty(REGISTRATION_PAGE_PATH);
         }
 
         if (userService.findByEmail(request.getParameter(EMAIL)).isPresent()) {
             LOGGER.debug(MessageManager.getProperty("error.user.email.already.exist"));
             request.getSession().setAttribute("user_email_error",
                     MessageManager.getProperty("error.user.email.already.exist"));
-            return ConfigurationManager.getProperty("registration.page.path");
+            return ConfigurationManager.getProperty(REGISTRATION_PAGE_PATH);
         }
         String email = request.getParameter(EMAIL);
-        userService.create(optionalUser.get());
-        LOGGER.debug("User " + email + " successfully registered");
-        request.getSession().setAttribute("user", email);
-        request.getSession().setAttribute("userRole", "user");
-        return ConfigurationManager.getProperty("main.page.path");
+        if (userService.create(optionalUser.get())) {
+            LOGGER.debug("User " + email + " successfully registered");
+            request.getSession().setAttribute("user", email);
+            request.getSession().setAttribute("userRole", "user");
+
+            return ConfigurationManager.getProperty("main.page.path");
+        }
+        request.getSession().setAttribute("userNotRegistered",
+                MessageManager.getProperty("error.adding.user"));
+        return ConfigurationManager.getProperty(REGISTRATION_PAGE_PATH);
     }
 
     //TODO: don't forget to handle all these errors in jsp
@@ -103,6 +108,7 @@ public class RegistrationCommand implements Command {
                 .withPassword(password)
                 .withFirstName(firstName)
                 .withLastName(lastName)
+                .withRole(new Role("user"))
                 .build());
     }
 }

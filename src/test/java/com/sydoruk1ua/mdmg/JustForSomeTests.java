@@ -37,4 +37,35 @@ public class JustForSomeTests {
         assertFalse("user1gmailcom".matches(LAST_NAME_REGEX));
         assertTrue("usergmailcom".matches(LAST_NAME_REGEX));
     }
+
+/*    @Test
+    public void testCreateAnswers() {
+        AnswerDao answerDao = new AnswerDaoImpl();
+        List<Answer> answers = new ArrayList<>();
+        answers.add(Answer.builder()
+                .withQuestionId(1)
+                .withAnswerEn("testEn1")
+                .withAnswerRu("русскийВопрос1")
+                .withIsCorrect("no")
+                .build());
+        answers.add(Answer.builder()
+                .withQuestionId(1)
+                .withAnswerEn("testEn2")
+                .withAnswerRu("русскийВопрос2")
+                .withIsCorrect("no")
+                .build());
+        answers.add(Answer.builder()
+                .withQuestionId(1)
+                .withAnswerEn("testEn3")
+                .withAnswerRu("русскийВопрос3")
+                .withIsCorrect("yes")
+                .build());
+        answers.add(Answer.builder()
+                .withQuestionId(1)
+                .withAnswerEn("testEn4")
+                .withAnswerRu("русскийВопрос4")
+                .withIsCorrect("no")
+                .build());
+        assertTrue(answerDao.create(answers));
+    }*/
 }

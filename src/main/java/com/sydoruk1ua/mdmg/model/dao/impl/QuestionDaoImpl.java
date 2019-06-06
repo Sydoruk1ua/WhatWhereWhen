@@ -3,38 +3,63 @@ package com.sydoruk1ua.mdmg.model.dao.impl;
 import com.sydoruk1ua.mdmg.model.dao.QuestionDao;
 import com.sydoruk1ua.mdmg.model.entity.Question;
 import com.sydoruk1ua.mdmg.model.entity.QuestionType;
-import com.sydoruk1ua.mdmg.util.Connector;
+import com.sydoruk1ua.mdmg.util.DbConnectionPool;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class QuestionDaoImpl implements QuestionDao {
+    public static final String INSERT_QUESTION = "INSERT INTO questions (type_id, question_en, question_ru, " +
+            "prompt_en, prompt_ru) VALUES (?, ?, ?, ?, ?)";
+    private static final Logger LOGGER = Logger.getLogger(QuestionDaoImpl.class);
     private static final String FIND_ALL_QUESTIONS = "SELECT q.id, q.type_id, q.question_en, q.question_ru," +
             " q.prompt_en, q.prompt_ru, qt.type AS type_name " +
             "FROM questions AS q JOIN question_types AS qt ON q.type_id = qt.id;";
 
-    private static final Logger LOGGER = Logger.getLogger(QuestionDaoImpl.class);
 
     @Override
-    public void create(Question entity) {
-        throw new UnsupportedOperationException();
+    public Optional<Integer> create(Question question) {
+        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(INSERT_QUESTION,
+                Statement.RETURN_GENERATED_KEYS)) {
+            statement.setInt(1, question.getQuestionType().getId());
+            statement.setString(2, question.getQuestionEn());
+            statement.setString(3, question.getQuestionRu());
+            statement.setString(4, question.getPromptEn());
+            statement.setString(5, question.getPromptRu());
+
+            int affectedRows = statement.executeUpdate();                           //TODO: refactor this
+            if (affectedRows == 0) {
+                return Optional.empty();
+            }
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return Optional.of(generatedKeys.getInt(1));
+                } else {
+                    return Optional.empty();
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage(), e);
+        }
+        return Optional.empty();
     }
 
     @Override
-    public Optional<Question> findById(Integer id) {
+    public Optional<Question> findById(java.lang.Integer id) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public List<Question> findAll() {
         List<Question> listOfAllQuestions = new ArrayList<>();
-        try (PreparedStatement preparedStatement = Connector.getConnection().prepareStatement(FIND_ALL_QUESTIONS);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(FIND_ALL_QUESTIONS);
+             ResultSet resultSet = statement.executeQuery()) {
 
             if (resultSet.next()) {
                 do {
@@ -65,12 +90,12 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public void update(Question entity) {
+    public void update(Question question) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(java.lang.Integer id) {
         throw new UnsupportedOperationException();
     }
 }

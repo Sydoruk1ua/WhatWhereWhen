@@ -20,6 +20,6 @@ public class GetAllQuestionsCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         request.setAttribute("questionsList", questionService.findAll());
         LOGGER.debug("Count of all questions: " + questionService.findAll().size());
-        return ConfigurationManager.getProperty("questions.page.path");
+        return ConfigurationManager.getProperty("questions.list.page.path");
     }
 }

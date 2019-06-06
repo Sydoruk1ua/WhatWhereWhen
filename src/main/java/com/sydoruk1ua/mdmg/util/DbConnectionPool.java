@@ -6,11 +6,11 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public final class Connector {
-    private static final Logger LOGGER = Logger.getLogger(Connector.class);
+public final class DbConnectionPool {
+    private static final Logger LOGGER = Logger.getLogger(DbConnectionPool.class);
     private static BasicDataSource dataSource;
 
-    private Connector() {
+    private DbConnectionPool() {
     }
 
     public static Connection getConnection() throws SQLException {
@@ -26,6 +26,10 @@ public final class Connector {
         ds.setUrl(ConfigurationManager.getProperty("db.url"));
         ds.setUsername(ConfigurationManager.getProperty("db.username"));
         ds.setPassword(ConfigurationManager.getProperty("db.password"));
+        ds.setMinIdle(Integer.parseInt(ConfigurationManager.getProperty("db.min.idle")));
+        ds.setMaxIdle(Integer.parseInt(ConfigurationManager.getProperty("db.max.idle")));
+        ds.setMaxOpenPreparedStatements(Integer.parseInt(ConfigurationManager.getProperty(
+                "db.max.open.prepare.statement")));
         dataSource = ds;
         LOGGER.debug("exit");
     }

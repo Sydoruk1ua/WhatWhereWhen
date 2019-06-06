@@ -3,12 +3,13 @@ package com.sydoruk1ua.mdmg.model.dao.impl;
 import com.sydoruk1ua.mdmg.model.dao.UserDao;
 import com.sydoruk1ua.mdmg.model.entity.Role;
 import com.sydoruk1ua.mdmg.model.entity.User;
-import com.sydoruk1ua.mdmg.util.Connector;
+import com.sydoruk1ua.mdmg.util.DbConnectionPool;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,9 +28,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try (PreparedStatement preparedStatement = Connector.getConnection().prepareStatement(FIND_USER_BY_EMAIL)) {
-            preparedStatement.setString(1, email);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(FIND_USER_BY_EMAIL)) {
+            statement.setString(1, email);
+            try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     return Optional.ofNullable(getUser(resultSet));
                 } else {
@@ -43,17 +44,29 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void create(User user) {
-        try (PreparedStatement preparedStatement = Connector.getConnection().prepareStatement(INSERT_USER)) {
-            preparedStatement.setString(1, user.getEmail());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getFirstName());
-            preparedStatement.setString(4, user.getLastName());
-            preparedStatement.setInt(5, user.getRole().getId());
-            preparedStatement.executeUpdate();
+    public Optional<Integer> create(User user) {
+        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(INSERT_USER,
+                Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, user.getEmail());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getFirstName());
+            statement.setString(4, user.getLastName());
+            statement.setInt(5, user.getRole().getId());
+            int affectedRows = statement.executeUpdate();                    //TODO: refactor this
+            if (affectedRows == 0) {
+                return Optional.empty();
+            }
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return Optional.of(generatedKeys.getInt(1));
+                } else {
+                    return Optional.empty();
+                }
+            }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
+        return Optional.empty();
     }
 
     @Override
@@ -64,8 +77,8 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> findAll() {
         List<User> listOfAllUsers = new ArrayList<>();
-        try (PreparedStatement preparedStatement = Connector.getConnection().prepareStatement(FIND_ALL_USERS);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(FIND_ALL_USERS);
+             ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 do {
                     listOfAllUsers.add(getUser(resultSet));

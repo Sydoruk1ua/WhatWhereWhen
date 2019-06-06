@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class Answer {
     private final Integer id;
-    private final Question question;
+    private final Integer questionId;
     private final String answerEn;
     private final String answerRu;
-    private final Boolean isCorrect;
+    private final String isCorrect;
 
     private Answer(Builder builder) {
         this.id = builder.id;
-        this.question = builder.question;
+        this.questionId = builder.questionId;
         this.answerEn = builder.answerEn;
         this.answerRu = builder.answerRu;
         this.isCorrect = builder.isCorrect;
@@ -19,6 +19,26 @@ public class Answer {
 
     public static Builder builder() {
         return new Builder();
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    public String getAnswerEn() {
+        return answerEn;
+    }
+
+    public String getAnswerRu() {
+        return answerRu;
+    }
+
+    public String getCorrect() {
+        return isCorrect;
     }
 
     @Override
@@ -31,7 +51,7 @@ public class Answer {
         }
         Answer answer = (Answer) o;
         return Objects.equals(id, answer.id) &&
-                Objects.equals(question, answer.question) &&
+                Objects.equals(questionId, answer.questionId) &&
                 Objects.equals(answerEn, answer.answerEn) &&
                 Objects.equals(answerRu, answer.answerRu) &&
                 Objects.equals(isCorrect, answer.isCorrect);
@@ -39,15 +59,15 @@ public class Answer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, question, answerEn, answerRu, isCorrect);
+        return Objects.hash(id, questionId, answerEn, answerRu, isCorrect);
     }
 
     public static class Builder {
         private Integer id;
-        private Question question;
+        private Integer questionId;
         private String answerEn;
         private String answerRu;
-        private Boolean isCorrect;
+        private String isCorrect;
 
         private Builder() {
 
@@ -62,8 +82,8 @@ public class Answer {
             return this;
         }
 
-        public Builder withQuestion(Question question) {
-            this.question = question;
+        public Builder withQuestionId(Integer questionId) {
+            this.questionId = questionId;
             return this;
         }
 
@@ -77,7 +97,7 @@ public class Answer {
             return this;
         }
 
-        public Builder withIsCorrect(Boolean isCorrect) {
+        public Builder withIsCorrect(String isCorrect) {
             this.isCorrect = isCorrect;
             return this;
         }

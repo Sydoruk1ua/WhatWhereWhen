@@ -10,23 +10,23 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public UserServiceImpl(UserDao userDao) {
         this.userDao = userDao;
     }
 
     @Override
-    public void create(User user) {
+    public boolean create(User user) {
         String encodedPassword = PasswordEncryptor.encrypt(user.getPassword());
         User userToDb = User.builder()
                 .withEmail(user.getEmail())
                 .withFirstName(user.getFirstName())
                 .withLastName(user.getLastName())
                 .withPassword(encodedPassword)
-                .withRole(getRoleByType("user"))
+                .withRole(getRoleWithIdByType(user.getRole().getType()))
                 .build();
-        userDao.create(userToDb);
+        return userDao.create(userToDb).isPresent();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         throw new UnsupportedOperationException();
     }
 
-    private Role getRoleByType(String type) {
+    private Role getRoleWithIdByType(String type) {
         switch (type) {
             case "admin":
                 return new Role(1, "admin");
