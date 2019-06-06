@@ -13,6 +13,7 @@
 <%--HADER--%>
 <jsp:include page="common/header.jsp"/>
 <fmt:message key="welcome.user"/> Home
+
 <form action="app" method="POST">
     <input type="hidden" name="command" value="users"/>
     <input type="submit" value="Users">

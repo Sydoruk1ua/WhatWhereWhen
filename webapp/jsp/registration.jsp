@@ -56,6 +56,7 @@ Length must be between 6 and 45 characters">
         </div>
     </div>
 </div>
+
 <%--FOOTER--%>
 <jsp:include page="common/footer.jsp"/>
 </body>

@@ -42,6 +42,9 @@ Length must be between 6 and 45 characters">
         </div>
     </div>
 </div>
+<object data="../img/whatwherewhen.mp3">
+    <param name="autoplay" value="true">
+</object>
 <%--FOOTER--%>
 <jsp:include page="common/footer.jsp"/>
 </body>
