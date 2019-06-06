@@ -68,8 +68,6 @@
         </c:choose>
     </form>
 </div>
-<%--FOOTER--%>
-<jsp:include page="common/footer.jsp"/>
 <!-- SCRIPTS -->
 <!-- JQuery -->
 <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>

@@ -4,6 +4,10 @@
 <html>
 <head>
     <title>Main</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/mdb.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/addons/datatables.min.css" rel="stylesheet">
 </head>
 <body>
 <%--HADER--%>
@@ -27,6 +31,10 @@
 <form action="app" method="POST">
     <input type="hidden" name="command" value="questions"/>
     <input type="submit" value="Questions">
+</form>
+<form action="app">
+    <input type="hidden" name="command" value="add_question"/>
+    <input type="submit" value="Add question">
 </form>
 <%--FOOTER--%>
 <jsp:include page="common/footer.jsp"/>

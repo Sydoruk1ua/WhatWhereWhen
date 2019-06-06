@@ -5,9 +5,6 @@
 <html>
 <head>
     <title>Users</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-    <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="../css/mdb.min.css" rel="stylesheet">
@@ -55,8 +52,6 @@
 </c:choose>
 
 </div>
-<%--FOOTER--%>
-<jsp:include page="common/footer.jsp"/>
 <!-- SCRIPTS -->
 <!-- JQuery -->
 <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>

@@ -15,10 +15,10 @@ public class LanguageCommand implements Command {
 
         String lang = request.getParameter(LANG);
 
-        if (lang.equals(EN)) {
-            request.getSession().setAttribute(LANG, EN);
-        } else {
+        if (RU.equals(lang)) {
             request.getSession().setAttribute(LANG, RU);
+        } else {
+            request.getSession().setAttribute(LANG, EN);
         }
         return ConfigurationManager.getProperty("main.page.path");
     }

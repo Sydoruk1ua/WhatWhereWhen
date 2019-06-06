@@ -3,12 +3,15 @@
 <html>
 <head>
     <title>Sign up</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/mdb.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/addons/datatables.min.css" rel="stylesheet">
 </head>
 <body>
 <%--HEADER--%>
 <jsp:include page="common/header.jsp"/>
 <div id="register">
-    <h3 class="text-center text-white pt-5">Login form</h3>
     <div class="container">
         <div id="register-row" class="row justify-content-center align-items-center">
             <div id="register-column" class="col-md-6">
@@ -53,5 +56,7 @@ Length must be between 6 and 45 characters">
         </div>
     </div>
 </div>
+<%--FOOTER--%>
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>

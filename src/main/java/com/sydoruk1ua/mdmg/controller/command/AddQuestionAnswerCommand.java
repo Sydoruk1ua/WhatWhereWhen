@@ -19,10 +19,10 @@ import java.util.Optional;
 import static com.sydoruk1ua.mdmg.util.Validator.*;
 
 public class AddQuestionAnswerCommand implements Command {
-    public static final String INVALID_ANSWER_DATA = "invalid.answer.data";
-    public static final String ERROR_MORE_THAN_ONE_CORRECT_ANSWER = "error.more.than.one.correct.answer";
     private static final Logger LOGGER = Logger.getLogger(AddQuestionAnswerCommand.class);
     //Messages
+    private static final String INVALID_ANSWER_DATA = "invalid.answer.data";
+    private static final String ERROR_MORE_THAN_ONE_CORRECT_ANSWER = "error.more.than.one.correct.answer";
     private static final String ERROR_INVALID_QUESTION = "error.invalid.question";
     private static final String ERROR_INVALID_QUESTION_PROMPT = "error.invalid.question.prompt";
     private static final String ERROR_INVALID_QUESTION_TYPE = "error.invalid.question.type";
@@ -32,11 +32,15 @@ public class AddQuestionAnswerCommand implements Command {
     private static final String INFO_QUESTION_WAS_ADDED = "info.question.was.added";
     //Path
     private static final String QUESTION_ADD_PAGE_PATH = "question.add.page.path";
-    private static final String QUESTIONS_PAGE_PATH = "questions.page.path";
+    private static final String QUESTIONS_PAGE_PATH = "questions.list.page.path";
     //Attributes
     private static final String INVALID_QUESTION_DATA = "invalid.question.data";
     private static final String DATABASE_ERROR = "database.error";
     private static final String QUESTION_ADDED = "question.added";
+    private static final String QUESTION_TYPE = "question_type";
+    //Param
+    private static final String MULTI = "multi";
+    private static final String SINGLE = "single";
     private final QuestionService questionService;
     private final AnswerService answerService;
 
@@ -47,6 +51,13 @@ public class AddQuestionAnswerCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        String questionTypeParam = request.getParameter(QUESTION_TYPE);
+
+        if (MULTI.equals(questionTypeParam)) {
+            request.getSession().setAttribute(QUESTION_TYPE, MULTI);
+        } else {
+            request.getSession().setAttribute(QUESTION_TYPE, SINGLE);
+        }
         Optional<Question> optionalQuestion = getValidOptionalQuestion(request);
         if (optionalQuestion.isPresent()) {
             Optional<Integer> optionalQuestionId = questionService.create(optionalQuestion.get());
