@@ -5,6 +5,9 @@
 <html>
 <head>
     <title>Users</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="../css/mdb.min.css" rel="stylesheet">
@@ -17,7 +20,7 @@
 <%--HEADER--%>
 <jsp:include page="common/header.jsp"/>
 <div class="container">
-    <h2>Users</h2>
+    <h2><fmt:message key="users.head"/></h2>
 
     <c:choose>
     <c:when test="${not empty usersList}">
@@ -25,10 +28,10 @@
         <thead>
         <tr>
             <td>#</td>
-            <td>email</td>
-            <td>First name</td>
-            <td>Last name</td>
-            <td>Role</td>
+            <td><fmt:message key="email"/></td>
+            <td><fmt:message key="first.name"/></td>
+            <td><fmt:message key="last.name"/></td>
+            <td><fmt:message key="user.role"/></td>
         </tr>
         </thead>
         <c:forEach var="user" items="${usersList}">

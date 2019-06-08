@@ -26,11 +26,11 @@
                     <c:if test="${empty sessionScope.user}">
                         <form action="app" class="text-light navbar-brand">
                             <input type="hidden" name="command" value="login_page"/>
-                            <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="signin"/>>
+                            <input type="submit" class="btn btn-info btn-md" value="<fmt:message key="signin"/>">
                         </form>
                         <form action="app" class="text-light navbar-brand">
                             <input type="hidden" name="command" value="registration_page"/>
-                            <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="signup"/>>
+                            <input type="submit" class="btn btn-info btn-md" value="<fmt:message key="signup"/>">
                         </form>
                     </c:if>
 
