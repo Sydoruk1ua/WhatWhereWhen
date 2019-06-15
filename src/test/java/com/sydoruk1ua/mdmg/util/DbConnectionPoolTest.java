@@ -13,7 +13,7 @@ public class DbConnectionPoolTest {
 
         for (int i = 0; i < 50; i++) {
             try {
-                assertTrue(DbConnectionPool.getConnection().isValid(1));
+                assertTrue(DbConnectionPoolUtil.getConnection().isValid(1));
             } catch (SQLException e) {
                 e.printStackTrace();
             }

@@ -2,12 +2,15 @@ package com.sydoruk1ua.mdmg.controller;
 
 import com.sydoruk1ua.mdmg.controller.command.*;
 import com.sydoruk1ua.mdmg.model.dao.impl.AnswerDaoImpl;
+import com.sydoruk1ua.mdmg.model.dao.impl.MessageDaoImpl;
 import com.sydoruk1ua.mdmg.model.dao.impl.QuestionDaoImpl;
 import com.sydoruk1ua.mdmg.model.dao.impl.UserDaoImpl;
 import com.sydoruk1ua.mdmg.model.service.AnswerService;
+import com.sydoruk1ua.mdmg.model.service.MessageService;
 import com.sydoruk1ua.mdmg.model.service.QuestionService;
 import com.sydoruk1ua.mdmg.model.service.UserService;
 import com.sydoruk1ua.mdmg.model.service.impl.AnswerServiceImpl;
+import com.sydoruk1ua.mdmg.model.service.impl.MessageServiceImpl;
 import com.sydoruk1ua.mdmg.model.service.impl.QuestionServiceImpl;
 import com.sydoruk1ua.mdmg.model.service.impl.UserServiceImpl;
 import com.sydoruk1ua.mdmg.util.ConfigurationManager;
@@ -23,6 +26,7 @@ public class CommandController {
     private final UserService userService = new UserServiceImpl(new UserDaoImpl());
     private final QuestionService questionService = new QuestionServiceImpl(new QuestionDaoImpl());
     private final AnswerService answerService = new AnswerServiceImpl(new AnswerDaoImpl());
+    private final MessageService messageService = new MessageServiceImpl(new MessageDaoImpl());
 
 
     private Map<String, Command> commands = new HashMap<>();
@@ -35,6 +39,9 @@ public class CommandController {
         commands.put("language", new LanguageCommand());
         commands.put("users", new GetAllUsersCommand(userService));
         commands.put("add_question", new AddQuestionAnswerCommand(questionService, answerService));
+        commands.put("game", new GameCommand(messageService));
+        commands.put("chatmsg", new ChatMsgCommand());
+        commands.put("reloadchat", new ReloadChatCommand(messageService));
 
         // Commands for redirect to concrete pages
         commands.put("login_page", (req, res) -> ConfigurationManager.getProperty("login.page.path"));

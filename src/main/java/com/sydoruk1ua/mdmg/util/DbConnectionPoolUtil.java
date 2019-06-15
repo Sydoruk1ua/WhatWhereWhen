@@ -4,13 +4,16 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
-public final class DbConnectionPool {
-    private static final Logger LOGGER = Logger.getLogger(DbConnectionPool.class);
+public final class DbConnectionPoolUtil {
+    private static final Logger LOGGER = Logger.getLogger(DbConnectionPoolUtil.class);
     private static BasicDataSource dataSource;
 
-    private DbConnectionPool() {
+    private DbConnectionPoolUtil() {
     }
 
     public static Connection getConnection() throws SQLException {
@@ -32,5 +35,19 @@ public final class DbConnectionPool {
                 "db.max.open.prepare.statement")));
         dataSource = ds;
         LOGGER.debug("exit");
+    }
+
+    public static Optional<Integer> getId(PreparedStatement statement) throws SQLException {
+        int affectedRows = statement.executeUpdate();
+        if (affectedRows == 0) {
+            return Optional.empty();
+        }
+        try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                return Optional.of(generatedKeys.getInt(1));
+            } else {
+                return Optional.empty();
+            }
+        }
     }
 }

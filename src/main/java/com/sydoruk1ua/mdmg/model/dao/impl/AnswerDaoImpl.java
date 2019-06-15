@@ -2,11 +2,10 @@ package com.sydoruk1ua.mdmg.model.dao.impl;
 
 import com.sydoruk1ua.mdmg.model.dao.AnswerDao;
 import com.sydoruk1ua.mdmg.model.entity.Answer;
-import com.sydoruk1ua.mdmg.util.DbConnectionPool;
+import com.sydoruk1ua.mdmg.util.DbConnectionPoolUtil;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -20,7 +19,7 @@ public class AnswerDaoImpl implements AnswerDao {
 
     @Override
     public boolean create(List<Answer> answers) {
-        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(INSERT_ANSWER)) {
+        try (PreparedStatement statement = DbConnectionPoolUtil.getConnection().prepareStatement(INSERT_ANSWER)) {
             for (Answer answer : answers) {
                 statement.setInt(1, answer.getQuestionId());
                 statement.setString(2, answer.getAnswerEn());
@@ -41,24 +40,14 @@ public class AnswerDaoImpl implements AnswerDao {
 
     @Override
     public Optional<Integer> create(Answer answer) {
-        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(INSERT_ANSWER,
+        try (PreparedStatement statement = DbConnectionPoolUtil.getConnection().prepareStatement(INSERT_ANSWER,
                 Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, answer.getQuestionId());
             statement.setString(2, answer.getAnswerEn());
             statement.setString(3, answer.getAnswerRu());
             statement.setString(4, answer.getCorrect());
 
-            int affectedRows = statement.executeUpdate();                           //TODO: refactor this
-            if (affectedRows == 0) {
-                return Optional.empty();
-            }
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return Optional.of(generatedKeys.getInt(1));
-                } else {
-                    return Optional.empty();
-                }
-            }
+            return DbConnectionPoolUtil.getId(statement);
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }

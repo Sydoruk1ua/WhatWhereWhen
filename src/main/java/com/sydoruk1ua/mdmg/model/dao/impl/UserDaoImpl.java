@@ -3,7 +3,7 @@ package com.sydoruk1ua.mdmg.model.dao.impl;
 import com.sydoruk1ua.mdmg.model.dao.UserDao;
 import com.sydoruk1ua.mdmg.model.entity.Role;
 import com.sydoruk1ua.mdmg.model.entity.User;
-import com.sydoruk1ua.mdmg.util.DbConnectionPool;
+import com.sydoruk1ua.mdmg.util.DbConnectionPoolUtil;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
@@ -28,7 +28,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(FIND_USER_BY_EMAIL)) {
+        try (PreparedStatement statement = DbConnectionPoolUtil.getConnection().prepareStatement(FIND_USER_BY_EMAIL)) {
             statement.setString(1, email);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
@@ -45,24 +45,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<Integer> create(User user) {
-        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(INSERT_USER,
+        try (PreparedStatement statement = DbConnectionPoolUtil.getConnection().prepareStatement(INSERT_USER,
                 Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getEmail());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getFirstName());
             statement.setString(4, user.getLastName());
             statement.setInt(5, user.getRole().getId());
-            int affectedRows = statement.executeUpdate();                    //TODO: refactor this
-            if (affectedRows == 0) {
-                return Optional.empty();
-            }
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return Optional.of(generatedKeys.getInt(1));
-                } else {
-                    return Optional.empty();
-                }
-            }
+
+            return DbConnectionPoolUtil.getId(statement);
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -76,12 +67,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        List<User> listOfAllUsers = new ArrayList<>();
-        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(FIND_ALL_USERS);
+        List<User> userList = new ArrayList<>();
+        try (PreparedStatement statement = DbConnectionPoolUtil.getConnection().prepareStatement(FIND_ALL_USERS);
              ResultSet resultSet = statement.executeQuery()) {
             if (resultSet.next()) {
                 do {
-                    listOfAllUsers.add(getUser(resultSet));
+                    userList.add(getUser(resultSet));
                 } while (resultSet.next());
             } else {
                 LOGGER.warn("Result Set is empty!");
@@ -90,7 +81,7 @@ public class UserDaoImpl implements UserDao {
             LOGGER.error(e.getMessage(), e);
         }
 
-        return listOfAllUsers;
+        return userList;
     }
 
     private User getUser(ResultSet resultSet) throws SQLException {

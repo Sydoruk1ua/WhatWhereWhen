@@ -11,6 +11,6 @@ public class NoCommand implements Command {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        return ConfigurationManager.getProperty("login.page.path");
+        return ConfigurationManager.getProperty("main.page.path");
     }
 }

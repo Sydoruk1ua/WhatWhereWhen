@@ -36,6 +36,10 @@
 
                     <c:if test="${not empty sessionScope.user}">
                         <form action="app" class="text-light navbar-brand">
+                            <input type="hidden" name="command" value="game"/>
+                            <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="game"/>>
+                        </form>
+                        <form action="app" class="text-light navbar-brand">
                             <input type="hidden" name="command" value="logout"/>
                             <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="logout"/>>
                         </form>

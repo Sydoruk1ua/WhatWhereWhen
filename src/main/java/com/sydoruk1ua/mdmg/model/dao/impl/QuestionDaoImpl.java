@@ -3,7 +3,7 @@ package com.sydoruk1ua.mdmg.model.dao.impl;
 import com.sydoruk1ua.mdmg.model.dao.QuestionDao;
 import com.sydoruk1ua.mdmg.model.entity.Question;
 import com.sydoruk1ua.mdmg.model.entity.QuestionType;
-import com.sydoruk1ua.mdmg.util.DbConnectionPool;
+import com.sydoruk1ua.mdmg.util.DbConnectionPoolUtil;
 import org.apache.log4j.Logger;
 
 import java.sql.PreparedStatement;
@@ -25,7 +25,7 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public Optional<Integer> create(Question question) {
-        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(INSERT_QUESTION,
+        try (PreparedStatement statement = DbConnectionPoolUtil.getConnection().prepareStatement(INSERT_QUESTION,
                 Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, question.getQuestionType().getId());
             statement.setString(2, question.getQuestionEn());
@@ -33,17 +33,7 @@ public class QuestionDaoImpl implements QuestionDao {
             statement.setString(4, question.getPromptEn());
             statement.setString(5, question.getPromptRu());
 
-            int affectedRows = statement.executeUpdate();                           //TODO: refactor this
-            if (affectedRows == 0) {
-                return Optional.empty();
-            }
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    return Optional.of(generatedKeys.getInt(1));
-                } else {
-                    return Optional.empty();
-                }
-            }
+            return DbConnectionPoolUtil.getId(statement);
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -58,7 +48,7 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public List<Question> findAll() {
         List<Question> listOfAllQuestions = new ArrayList<>();
-        try (PreparedStatement statement = DbConnectionPool.getConnection().prepareStatement(FIND_ALL_QUESTIONS);
+        try (PreparedStatement statement = DbConnectionPoolUtil.getConnection().prepareStatement(FIND_ALL_QUESTIONS);
              ResultSet resultSet = statement.executeQuery()) {
 
             if (resultSet.next()) {
