@@ -1,5 +1,6 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Sign in</title>
@@ -11,6 +12,7 @@
 <body>
 <%--HEADER--%>
 <jsp:include page="common/header.jsp"/>
+
 <div id="login">
     <div class="container">
         <div id="login-row" class="row justify-content-center align-items-center">
@@ -42,7 +44,8 @@
         </div>
     </div>
 </div>
-<object data="../img/whatwherewhen.mp3">
+
+<object data="../sound/whatwherewhen.mp3">
     <param name="autoplay" value="true">
 </object>
 <%--FOOTER--%>

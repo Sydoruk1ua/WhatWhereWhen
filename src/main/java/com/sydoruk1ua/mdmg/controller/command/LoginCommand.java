@@ -22,25 +22,20 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String page = null;
+        String page;
 
         String email = request.getParameter(PARAM_NAME_EMAIL);
         String pass = request.getParameter(PARAM_NAME_PASSWORD);
-        LOGGER.debug(email);
-        LOGGER.debug(pass);
 
         Optional<User> optionalUser = userService.findByEmailAndPassword(email, pass);
         if (optionalUser.isPresent()) {
-            LOGGER.debug("User is present");
             User user = optionalUser.get();
             request.getSession().setAttribute("user", user.getEmail());
             request.getSession().setAttribute("userRole", user.getRole().getType());
             page = ConfigurationManager.getProperty("main.page.path");
         } else {
-            LOGGER.debug("entered else block");
             request.setAttribute("errorMessage", MessageManager.getProperty("login.error.message"));
             page = ConfigurationManager.getProperty("error.page.path");
-            LOGGER.debug("exit else block");
         }
 
         return page;

@@ -2729,7 +2729,7 @@
 
             if (_ret === "continue")
 
-        }
+                }
 
         return createdDocument.body.innerHTML;
     }

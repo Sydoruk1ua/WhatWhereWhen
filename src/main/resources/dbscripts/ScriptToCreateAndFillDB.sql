@@ -1,3 +1,5 @@
+CREATE DATABASE IF NOT EXISTS `mdmg` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `mdmg`;
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: mdmg
@@ -14,6 +16,29 @@ SET NAMES utf8;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0 */;
 /*!40101 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES = @@SQL_NOTES, SQL_NOTES = 0 */;
+
+--
+-- Table structure for table `answers`
+--
+
+DROP TABLE IF EXISTS `answers`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+SET character_set_client = utf8mb4;
+CREATE TABLE `answers`
+(
+    `id`          int(11)           NOT NULL AUTO_INCREMENT,
+    `question_id` int(11)           NOT NULL,
+    `answer_en`   varchar(200)      NOT NULL,
+    `answer_ru`   varchar(200)      NOT NULL,
+    `is_correct`  enum ('yes','no') NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `question_id` (`question_id`),
+    CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 59
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `answers`
@@ -33,6 +58,57 @@ VALUES (1, 1, 'Hockey', 'Хоккей', 'no'),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `messages`
+--
+
+DROP TABLE IF EXISTS `messages`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+SET character_set_client = utf8mb4;
+CREATE TABLE `messages`
+(
+    `id`         int(11)      NOT NULL AUTO_INCREMENT,
+    `user_email` varchar(45)  NOT NULL,
+    `message`    varchar(200) NOT NULL,
+    `timestamp`  timestamp    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `user_email_id_idx` (`user_email`),
+    CONSTRAINT `user_email_id` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 58
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `messages`
+--
+
+LOCK TABLES `messages` WRITE;
+/*!40000 ALTER TABLE `messages`
+    DISABLE KEYS */;
+/*!40000 ALTER TABLE `messages`
+    ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `question_types`
+--
+
+DROP TABLE IF EXISTS `question_types`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+SET character_set_client = utf8mb4;
+CREATE TABLE `question_types`
+(
+    `id`   int(11)     NOT NULL AUTO_INCREMENT,
+    `type` varchar(20) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 3
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `question_types`
 --
 
@@ -45,6 +121,32 @@ VALUES (1, 'single'),
 /*!40000 ALTER TABLE `question_types`
     ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `questions`
+--
+
+DROP TABLE IF EXISTS `questions`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+SET character_set_client = utf8mb4;
+CREATE TABLE `questions`
+(
+    `id`          int(11)      NOT NULL AUTO_INCREMENT,
+    `type_id`     int(11)      NOT NULL,
+    `question_en` varchar(450) NOT NULL,
+    `question_ru` varchar(450) NOT NULL,
+    `prompt_en`   varchar(200) NOT NULL,
+    `prompt_ru`   varchar(200) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `question_en_UNIQUE` (`question_en`),
+    UNIQUE KEY `question_ru_UNIQUE` (`question_ru`),
+    KEY `id` (`type_id`),
+    CONSTRAINT `id` FOREIGN KEY (`type_id`) REFERENCES `question_types` (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 64
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `questions`
@@ -65,6 +167,24 @@ VALUES (1, 2, 'In which of these games players don\'t use a brassy/bandy?', 'В 
 UNLOCK TABLES;
 
 --
+-- Table structure for table `roles`
+--
+
+DROP TABLE IF EXISTS `roles`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+SET character_set_client = utf8mb4;
+CREATE TABLE `roles`
+(
+    `id`   int(11)     NOT NULL AUTO_INCREMENT,
+    `type` varchar(20) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 4
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `roles`
 --
 
@@ -79,6 +199,30 @@ VALUES (1, 'admin'),
     ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+SET character_set_client = utf8mb4;
+CREATE TABLE `users`
+(
+    `id`         int(11)     NOT NULL AUTO_INCREMENT,
+    `email`      varchar(45) NOT NULL,
+    `password`   varchar(45) NOT NULL,
+    `first_name` varchar(45) NOT NULL,
+    `last_name`  varchar(45) NOT NULL,
+    `role_id`    int(11)     NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `email_UNIQUE` (`email`),
+    KEY `role_id` (`role_id`),
+    CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 34
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `users`
@@ -123,4 +267,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
-
+-- Dump completed on 2019-06-17  9:47:12

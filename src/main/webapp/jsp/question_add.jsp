@@ -99,45 +99,45 @@
 <!-- MDBootstrap Datatables  -->
 <script type="text/javascript" src="../js/addons/datatables.min.js"></script>
 <script>
-    var text_max = 450;
-    $('#count_message_qen').html(text_max + ' remaining');
+    var text_max_qen = 450;
+    $('#count_message_qen').html(text_max_qen + ' remaining');
 
     $('#question_en').keyup(function () {
         var text_length = $('#question_en').val().length;
-        var text_remaining = text_max - text_length;
+        var text_remaining = text_max_qen - text_length;
 
         $('#count_message_qen').html(text_remaining + ' remaining');
     });
 </script>
 <script>
-    var text_max = 450;
-    $('#count_message_qru').html(text_max + ' remaining');
+    var text_max_qru = 450;
+    $('#count_message_qru').html(text_max_qru + ' remaining');
 
     $('#question_ru').keyup(function () {
         var text_length = $('#question_ru').val().length;
-        var text_remaining = text_max - text_length;
+        var text_remaining = text_max_qru - text_length;
 
         $('#count_message_qru').html(text_remaining + ' remaining');
     });
 </script>
 <script>
-    var text_max = 200;
-    $('#count_message_pen').html(text_max + ' remaining');
+    var text_max_pen = 200;
+    $('#count_message_pen').html(text_max_pen + ' remaining');
 
     $('#prompt_en').keyup(function () {
         var text_length = $('#prompt_en').val().length;
-        var text_remaining = text_max - text_length;
+        var text_remaining = text_max_pen - text_length;
 
         $('#count_message_pen').html(text_remaining + ' remaining');
     });
 </script>
 <script>
-    var text_max = 200;
-    $('#count_message_pru').html(text_max + ' remaining');
+    var text_max_pru = 200;
+    $('#count_message_pru').html(text_max_pru + ' remaining');
 
     $('#prompt_ru').keyup(function () {
         var text_length = $('#prompt_ru').val().length;
-        var text_remaining = text_max - text_length;
+        var text_remaining = text_max_pru - text_length;
 
         $('#count_message_pru').html(text_remaining + ' remaining');
     });

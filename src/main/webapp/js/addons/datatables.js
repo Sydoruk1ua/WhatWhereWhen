@@ -14794,9 +14794,8 @@
      */
 
     return $.fn.dataTable;
-}));
-
-
+});
+)
 /*! DataTables Bootstrap 4 integration
  * ©2011-2017 SpryMedia Ltd - datatables.net/license
  */

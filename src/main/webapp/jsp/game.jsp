@@ -86,82 +86,9 @@
         $.get("app?command=reloadchat");
     }
 
-    setInterval(function () {
-        update();
-    }, 10000);
+    /*    setInterval(function () {
+            update();
+        }, 10000);*/
 </script>
 </body>
 </html>
-<%--<iframe src="app?command=reloadchat" height="200" width="300">
-
-</iframe>
-<p id="result"></p>
-<p style="float:left; margin-left:26%;"> Welcome, <%=login%>. </p>
-<div id="list" class="always-middle-chat" style="overflow-y:auto;">
-    <div id="content"></div>
-</div>
-<form action="app" class="text-light navbar-brand">
-    <input type="text" id="u" value="<%=login%>">
-    <textarea id='h' class="textbox-chat"
-              onkeydown="if (event.keyCode == 13){ document.getElementById('btn').click(); return false}"></textarea>
-    <input type="button" class="btn-chat" style="" id="btn" value="Enter"
-           onclick="send_msg(); olist = document.getElementById('list'); olist.scrollTop = olist.scrollHeight;"/>
-</form>
-111111111111111111111111111111111111111111111111111111111111111111111
-<c:forEach  items="${applicationScope.listM}" var="message">
-    <tr>
-        <td>${message}</td>
-    </tr>
-</c:forEach>--%>
-<%--<script>
-    function update() {
-        $.get("app?command=game", { from : document.getElementById('userId').getAttribute('datafld') }, function(responseText) {
-            $("#messageDiv").append(responseText);
-        });
-    }
-    setInterval(update, 1000);
-    $(document).on("click", "#sendButton", function() {
-        $.post("app?command=game", { from : document.getElementById('userId').getAttribute('datafld'), message :
-            document.getElementById('message').value });
-    });
-</script>--%>
-<%--<div id="userId" datafld="${sessionScope.user}"></div>
-<div>Hello, ${sessionScope.user}. Type your message below and press "Send" to broadcast it.</div>
-<form action="app" class="text-light navbar-brand">
-    <input type="hidden" name="command" value="game"/>
-    <input id="message" type="text" value="message">
-    <input id="sendButton" type="button" value="Send">
-    <div id="messageDiv"></div>
-   &lt;%&ndash; <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="game"/>>&ndash;%&gt;
-</form>
-
-    function send_msg() {
-        var login = document.getElementById("u").value;
-        var msg = document.getElementById('h').value;
-        olist = document.getElementById('list');
-        if (msg.length == 0) return;
-        ocontent = document.getElementById('content');
-        document.getElementById('h').value = '';
-
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "app?command=chatmsg&login=" + login + "&msg=" + msg, true);
-        xmlhttp.send(null);
-    }
-
-    function reload() {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open("POST", "app?command=reloadchat", true);
-        xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                document.getElementById("content").style.marginLeft = "10px";
-                document.getElementById("content").innerHTML = xmlhttp.responseText;
-                var list = document.getElementById('list');
-                list.scrollTop = list.scrollHeight;
-            }
-        }
-        xmlhttp.send(null);
-    }
-</script>
-<%--<script>
-    setInterval(reload, 1000);
-</script>--%>

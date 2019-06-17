@@ -41,7 +41,7 @@
                         </form>
                         <form action="app" class="text-light navbar-brand">
                             <input type="hidden" name="command" value="logout"/>
-                            <input type="submit" class="btn btn-info btn-md" value=<fmt:message key="logout"/>>
+                            <input type="submit" class="btn btn-info btn-md" value="<fmt:message key="signout"/>">
                         </form>
                     </c:if>
 
