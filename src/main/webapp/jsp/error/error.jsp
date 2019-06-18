@@ -11,7 +11,7 @@
 <body>
 <%--HEADER--%>
 <jsp:include page="/jsp/common/header.jsp"/>
-<img src="<c:url value="/img/404.jpg"/>" style="width: 100%; height: 100%;">
+<img src="${pageContext.request.contextPath}/img/error.png" style="width: 100%; height: 100%;">
 
 </body>
 </html>

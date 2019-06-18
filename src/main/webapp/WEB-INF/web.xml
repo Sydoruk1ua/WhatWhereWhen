@@ -16,6 +16,17 @@
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/jsp/error/error500.jsp</location>
+        <location>/jsp/error/error.jsp</location>
     </error-page>
+
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/</url-pattern>
+        <url-pattern>/app/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>AuthorizationFilter</filter-name>
+        <url-pattern>/app</url-pattern>
+    </filter-mapping>
 </web-app>

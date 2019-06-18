@@ -40,8 +40,6 @@ public class CommandController {
         commands.put("users", new GetAllUsersCommand(userService));
         commands.put("add_question", new AddQuestionAnswerCommand(questionService, answerService));
         commands.put("game", new GameCommand(messageService));
-        commands.put("chatmsg", new ChatMsgCommand());
-        commands.put("reloadchat", new ReloadChatCommand(messageService));
 
         // Commands for redirect to concrete pages
         commands.put("login_page", (req, res) -> ConfigurationManager.getProperty("login.page.path"));

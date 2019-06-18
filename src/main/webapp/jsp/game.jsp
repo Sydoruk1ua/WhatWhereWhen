@@ -26,10 +26,12 @@
 <div class="container">
     <div class="row">
         <div class="col-1-2">
-            test1
+            Here should be: <br>
+            For Judge: Question, prompt, answer, time start <br>
+            For user: only question should be visible.
         </div>
         <div class="col-1-2">
-            test2
+            Here should be score for Experts and Viewers
         </div>
     </div>
     <div class="row">
