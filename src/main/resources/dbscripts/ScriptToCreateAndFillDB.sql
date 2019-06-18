@@ -35,7 +35,7 @@ CREATE TABLE `answers`
     KEY `question_id` (`question_id`),
     CONSTRAINT `answers_ibfk_1` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 59
+  AUTO_INCREMENT = 100
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -52,7 +52,44 @@ VALUES (1, 1, 'Hockey', 'Хоккей', 'no'),
        (2, 1, 'Golf', 'Гольф', 'no'),
        (3, 1, 'Polo', 'Поло', 'no'),
        (4, 1, 'Billiards ', 'Бильярд', 'yes'),
-       (5, 2, 'Mississippi and Missouri.', 'Миссисипи и Миссури.', 'yes');
+       (5, 2, 'Mississippi and Missouri.', 'Миссисипи и Миссури.', 'yes'),
+       (6, 3, 'Arcade', 'Arcade', 'no'),
+       (7, 3, 'Action', 'Action', 'yes'),
+       (8, 3, 'RPG', 'RPG', 'no'),
+       (9, 3, 'RTS', 'RTS', 'no'),
+       (67, 4, 'Corcovado', 'Корковадо', 'yes'),
+       (68, 4, 'Tupungato', 'Тупунгато', 'no'),
+       (69, 4, 'Uuskaran', 'Уаскаран', 'no'),
+       (70, 4, 'Il\'imani', 'Ильимани', 'no'),
+       (71, 5, 'Camel', 'Верблюд', 'no'),
+       (72, 5, 'Horse', 'Конь', 'no'),
+       (73, 5, 'Donkey', 'Осел', 'yes'),
+       (74, 5, 'Hedgehog', 'Ежик', 'no'),
+       (75, 6, 'Germany', 'Германия', 'no'),
+       (76, 6, 'Japan', 'Япония', 'yes'),
+       (77, 6, 'Italy', 'Италия', 'no'),
+       (78, 6, 'Finland', 'Финляндия', 'no'),
+       (79, 7, 'Novelist', 'Романист', 'no'),
+       (80, 7, 'Playwright', 'Драматург', 'no'),
+       (81, 7, 'Essayist', 'Эссеист', 'no'),
+       (82, 7, 'Poet', 'Поэт', 'yes'),
+       (83, 8, 'Hafnium', 'Гафний', 'no'),
+       (84, 8, 'Beryllium', 'Бериллий', 'no'),
+       (85, 8, 'Cobalt', 'Кобальт', 'yes'),
+       (86, 8, 'tellurium', 'Теллур', 'no'),
+       (87, 9, 'Mosquitoes', 'Комары', 'yes'),
+       (88, 9, 'Bats', 'Летучие мыши', 'no'),
+       (89, 9, 'Leeches', 'Пиявки', 'no'),
+       (90, 9, 'Ticks', 'Клещи', 'no'),
+       (91, 10, 'Handshake', 'Рукопожатие', 'yes'),
+       (92, 11, 'Freak. Right answers too: freaker, phreak, phreaker.',
+        'Фрик. Можно также засчитать: фрикер, phreak, phreaker', 'yes'),
+       (93, 12,
+        'Answer: gauze bandage, dark glasses\r\nCounts: breathing mask, medical mask, surgical dressing; black glasses, sunglasses.\r\n',
+        'Ответ: марлевая повязка, темные очки\r\nЗачёт: дыхательная маска, медицинская маска, хирургическая повязка; черные очки, солнцезащитные очки. ',
+        'yes'),
+       (94, 13, 'rainbow table', 'радужная таблица', 'yes'),
+       (95, 14, '[John] Dalton', '[Джон] Дальтон', 'yes');
 /*!40000 ALTER TABLE `answers`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -74,7 +111,7 @@ CREATE TABLE `messages`
     KEY `user_email_id_idx` (`user_email`),
     CONSTRAINT `user_email_id` FOREIGN KEY (`user_email`) REFERENCES `users` (`email`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 58
+  AUTO_INCREMENT = 85
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -143,7 +180,7 @@ CREATE TABLE `questions`
     KEY `id` (`type_id`),
     CONSTRAINT `id` FOREIGN KEY (`type_id`) REFERENCES `question_types` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 64
+  AUTO_INCREMENT = 15
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -161,7 +198,51 @@ VALUES (1, 2, 'In which of these games players don\'t use a brassy/bandy?', 'В 
        (2, 1,
         'They are closely related to each other. You would think that one of them - Ippi - married, and the other - Uri - unmarried. Call them.',
         'Они тесно связаны друг с другом. Можно подумать, что одна из них - Ипи - замужняя, а другая - Ури - незамужняя. Назовите их.',
-        'It is a river', 'Это река');
+        'It is a river', 'Это река'),
+       (3, 2,
+        'Name the most numerous (both in terms of the number of games released and in popularity among users) the genre of computer games.',
+        'Назовите самый многочисленный (и по количеству выпущенных игр и по популярности среди пользователей) жанр компьютерных игр.',
+        'Starts from “A”', 'Начинается на “A”'),
+       (4, 2, 'At the top of which mountain is a forty-meter statue of Christ, a symbol of Rio de Janeiro?\r\n',
+        'На вершине какой горы расположена сорокаметровая статуя Христа, являющаяся символом Рио-де-Жанейро?',
+        'It means \"hunchback\" in Portuguese.', 'Это означает «горбун» на португальском языке.'),
+       (5, 2, 'Thanks to what animal did Shurik meet Nina in the film \"Kidnapping, Caucasian Style!\"?',
+        'Благодаря какому животному Шурик познакомился с Ниной в к/ф \'Кавказская пленница\'?',
+        'One of the main characters in \"Shrek\" movie.', 'Один из главных героев мультфильма “Шрек”'),
+       (6, 2, 'The territory of which of these countries is the largest?',
+        'Территория какой из этих стран - наибольшая?', 'It is island country.', 'Это островная страна.'),
+       (7, 2, 'Who got the first Nobel Prize in literature?', 'Кто получил первую Нобелевскую премию по литературе?',
+        'This is not a specific name.', 'Это не конкретное имя.'),
+       (8, 2, 'What chemical element was named after the evil underground dwarf?',
+        'Какой химический элемент был назван в честь злого подземного гнома?',
+        'Its name is consonant with the programming language', 'Его название созвучно с языком программирования'),
+       (9, 2, 'Which of the \"vampires\" only females drink blood?', 'У кого из \"вампиров\" кровь пьют только самки?',
+        'They make an annoying sound.', 'Они издают раздражающий звук.'),
+       (10, 1,
+        'Before transmitting the data, servers exchange short packets to establish a connection. This process is called \"it\". In the television \"What? Where? When?\" there is no “it”, but in football there is “it”. Call “it”.',
+        'Перед передачей данных сервера обмениваются короткими пакетами для установления связи. Такой процесс называется \"ОНО\". В телевизионном \"Что?Где?Когда?\" ЕГО обычно нет, а в футболе есть. Назовите ЕГО.',
+        'In football, before the game, teams usually exchange “it”. And in the television \"What? Where? When?\" only one team plays, so there is no “it”.',
+        'В футболе перед игрой команды обычно обмениваются “Этим”. А в телевизионном \"Что? Где? Когда?\" играет только одна команда, поэтому и “Этого” нет.'),
+       (11, 1,
+        'The so-called “Blue Box” made it possible to make long-distance calls free of charge, sending certain signals to the telephone network. The secret of the box was the correct SHE. According to one version, a slang word originated from the word \"SHE\", which the owners of the \"blue boxes\" called themselves. Write this word.',
+        'Так называемая \"Синяя коробка\" позволяла бесплатно совершать междугородние звонки, посылая в телефонную сеть определенные сигналы. Секретом коробки была правильно подобраная ОНА. По одной версии от слова \"ОНА\" произошло сленговое слово, которым называли себя владельцы \"синих коробок\". Напишите это слово.',
+        'With the help of signals with a certain frequency, the blue boxes forged the system\'s network signals. The owners of the blue boxes combined the words phone and frequency and formed “this” word. ',
+        'С помощью сигналов с определенной частотой \"синие коробки\" подделывали системные сигналы сети. Владельцы \"синих коробок\" объединили слова phone и frequency и образовали “это” слово. '),
+       (12, 1,
+        'The Japanese and the Europeans read emotions in different ways. At one presentation, the difference between Japanese and European emotions was illustrated by quite familiar photos of Japanese in the FIRST and Europeans in the SECOND. Call in two words FIRST, and two words SECOND.',
+        'Японцы и европейцы по-разному читают эмоции. На одной презентации разницу между японскими и европейскими смайликами иллюстрировали достаточно привычные фотографии японцев в ПЕРВЫХ и европейцев во ВТОРЫХ. Назовите двумя словами ПЕРВУЮ, и двумя словами ВТОРЫХ.',
+        'On Japanese emoticons the mouth is usually the same, and emotions are expressed through the eyes. In the more familiar to us European emoticons all the way around. Japanese often wear “these”, fearing',
+        'На японских смайликах рот обычно одинаковый, а эмоции выражены через глаза. В более привычных нам европейский смайликах все наоборот. Японцы часто носят “ИХ”, боясь заразиться самим или заразить други'),
+       (13, 1,
+        'According to one version, SHE got its name because of a wide range of possibilities. According to another version - due to the different images of each column. Call HER two words.',
+        'По одной версии ОНА получила свое название из-за широкого спектра возможностей. По другой версии - из-за разного изображения каждой колонки. Назовите ЕЁ двумя словами.',
+        '“THEY” is used to break hash functions. The string of “THEM” is a chain of text values after applying a hash function and a reduction function. Usually, the various reduction functions are indicated b',
+        '“ИХ”используются для взлома хэш-функций. Строка “ИХ”- это цепочка значений текста после применения хэш-функции и функции редукции. Обычно различные функции редукции обозначают разным цветом.'),
+       (14, 1,
+        'Bill Atkinson developed a graphics editor for the first Macintosh, but with the development of technology, he had to switch to other projects. Explaining the reason for this, recall the phenomenon that was first described ... Who?',
+        'Билл Аткинсон разработал графический редактор для первого Макинтоша, однако с развитием технологий ему пришлось перейти на другие проекты. Объясняя причину этого, вспоминают явление, которое впервые описал... Кто?',
+        'The screen of the first Macintosh was black and white. There was a certain disease in Bill Atkinson, and with the advent of color displays, he was no longer able to effectively develop graphic tools.',
+        'Экран первого Макинтоша был черно-белым. В Билла Аткинсона был некоторая болезнь, и с появлением цветных дисплеев он уже не мог эффективно заниматься разработкой графических инструментов. ');
 /*!40000 ALTER TABLE `questions`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -219,7 +300,7 @@ CREATE TABLE `users`
     KEY `role_id` (`role_id`),
     CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
 ) ENGINE = InnoDB
-  AUTO_INCREMENT = 34
+  AUTO_INCREMENT = 23
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -232,10 +313,10 @@ LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users`
     DISABLE KEYS */;
 INSERT INTO `users`
-VALUES (1, 'admin1@gmail.com', '6ca96199605f82f949731d890e987191', 'Admin1', 'AdminLast', 1),
+VALUES (1, 'admin@gmail.com', '6ca96199605f82f949731d890e987191', 'Admin1', 'AdminLast', 1),
        (2, 'user1@gmail.com', 'd35d3ba516a1827bd24ffec29ed1a438', 'User1', 'UserLast1', 2),
        (3, 'user2@yandex.ru', '5d43b145b2fcd8340acec2136a5f08fe', 'Юзер2', 'Юзеренко', 2),
-       (4, 'judge1@gmail.com', '2c71032341ac3a0fdcfacb1b7997ae82', 'John', 'Doe', 3),
+       (4, 'judge@gmail.com', '2c71032341ac3a0fdcfacb1b7997ae82', 'John', 'Doe', 3),
        (5, 'nataliya.trach@gmail.com', '044c2a1259365c868c07b50034fd2369', 'Nataliya', 'Trach', 2),
        (6, 'sasha.rainin@gmail.com', 'c53a3f84a12f90c521aff57d0b808e7c', 'Sasha', 'Rainin', 2),
        (7, 'kola.granovsky@gmail.com', '8d4f2aa45eec1dbf460e47d01fb0769a', 'Kola', 'Granovsky', 2),
@@ -267,4 +348,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES = @OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-17  9:47:12
+-- Dump completed on 2019-06-18  7:55:34

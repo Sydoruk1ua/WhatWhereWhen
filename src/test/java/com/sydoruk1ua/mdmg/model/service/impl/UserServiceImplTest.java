@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Optional;
 
@@ -29,7 +29,7 @@ public class UserServiceImplTest {
             .withFirstName("User1")
             .withLastName("UserLast1")
             .withRole(new Role(2, "user"))
-            .build());;
+            .build());
 
     @Mock
     private UserDao userDao;

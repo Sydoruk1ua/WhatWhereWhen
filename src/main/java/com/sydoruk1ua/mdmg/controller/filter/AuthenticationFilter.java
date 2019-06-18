@@ -24,25 +24,22 @@ import java.util.stream.Stream;
 public class AuthenticationFilter implements Filter {
 
     private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class);
-    private final Set<String> ALLOWED_PATHS = Stream.of("/app").collect(Collectors.toCollection(HashSet::new));
+    private final Set<String> allowedPaths = Stream.of("/app").collect(Collectors.toCollection(HashSet::new));
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        LOGGER.debug("enter");
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         String uri = request.getRequestURI();
-        LOGGER.debug(uri);
 
         if (uri.equals("/")) {
             response.sendRedirect(ConfigurationManager.getProperty("login.page.path"));
         } else {
-            if (ALLOWED_PATHS.contains(uri)) {
-                LOGGER.debug("true");
+            if (allowedPaths.contains(uri)) {
                 filterChain.doFilter(request, response);
             } else {
-                LOGGER.debug("false");
                 response.sendRedirect(ConfigurationManager.getProperty("error.page.path"));
             }
         }

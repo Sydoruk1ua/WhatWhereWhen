@@ -22,7 +22,6 @@ public class LoginCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String page;
 
         String email = request.getParameter(PARAM_NAME_EMAIL);
         String pass = request.getParameter(PARAM_NAME_PASSWORD);
@@ -32,12 +31,10 @@ public class LoginCommand implements Command {
             User user = optionalUser.get();
             request.getSession().setAttribute("user", user.getEmail());
             request.getSession().setAttribute("userRole", user.getRole().getType());
-            page = ConfigurationManager.getProperty("main.page.path");
+            return ConfigurationManager.getProperty("main.page.path");
         } else {
             request.setAttribute("loginError", MessageManager.getProperty("login.error.message"));
-            page = ConfigurationManager.getProperty("login.page.path");
+            return ConfigurationManager.getProperty("login.page.path");
         }
-
-        return page;
     }
 }
