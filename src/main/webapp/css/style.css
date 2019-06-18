@@ -181,3 +181,32 @@ div.middle-chat {
     width: 4%;
     margin: -100px 0 0 -100px;
 }
+
+.hero-image {
+    background-image: url(/img/owl.png); /* The image used */
+    background-color: #cccccc; /* Used if the image is unavailable */
+    height: 500px; /* You must set a specified height */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover; /* Resize the background image to cover the entire container */
+}
+
+.my-header-text {
+    color: orange;
+}
+
+.text-my-a {
+    color: mediumvioletred;
+}
+
+.text-my-b {
+    color: deepskyblue;
+}
+
+.text-my-c {
+    color: mediumseagreen;
+}
+
+.text-my-d {
+    color: darkorange;
+}

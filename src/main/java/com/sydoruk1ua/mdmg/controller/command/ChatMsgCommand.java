@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ChatMsgCommand implements Command {
-
+    //TODO: maybe I should delete this, if I don't want to split game and chat realization
     private static final String INSERT_INTO_MESSAGES = "INSERT INTO messages(login, msg, data, time) " +
             "VALUES(?, ?, ?, ?)";
 

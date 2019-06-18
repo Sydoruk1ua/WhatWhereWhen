@@ -35,8 +35,8 @@
                     <thead>
                     <tr>
                         <td>#</td>
-                        <td>Question</td>
-                        <td>Question Type</td>
+                        <td><fmt:message key="question"/></td>
+                        <td><fmt:message key="question.type"/></td>
                     </tr>
                     </thead>
                     <c:if test="${language == 'en'}">

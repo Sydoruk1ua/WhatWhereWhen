@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ReloadChatCommand implements Command {
+    //TODO: maybe I should delete this, if I don't want to split game and chat realization
     private static final Logger LOGGER = Logger.getLogger(GameCommand.class);
 
     private static final String GET_MESSAGES = "SELECT * from messages ORDER BY 1";

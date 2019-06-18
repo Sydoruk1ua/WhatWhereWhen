@@ -34,8 +34,8 @@ public class LoginCommand implements Command {
             request.getSession().setAttribute("userRole", user.getRole().getType());
             page = ConfigurationManager.getProperty("main.page.path");
         } else {
-            request.setAttribute("errorMessage", MessageManager.getProperty("login.error.message"));
-            page = ConfigurationManager.getProperty("error.page.path");
+            request.setAttribute("loginError", MessageManager.getProperty("login.error.message"));
+            page = ConfigurationManager.getProperty("login.page.path");
         }
 
         return page;

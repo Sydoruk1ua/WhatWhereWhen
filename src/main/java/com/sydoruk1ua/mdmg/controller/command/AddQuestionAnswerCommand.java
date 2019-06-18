@@ -21,7 +21,6 @@ import static com.sydoruk1ua.mdmg.util.Validator.*;
 public class AddQuestionAnswerCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(AddQuestionAnswerCommand.class);
     //Messages
-    private static final String INVALID_ANSWER_DATA = "invalid.answer.data";
     private static final String ERROR_MORE_THAN_ONE_CORRECT_ANSWER = "error.more.than.one.correct.answer";
     private static final String ERROR_INVALID_QUESTION = "error.invalid.question";
     private static final String ERROR_INVALID_QUESTION_PROMPT = "error.invalid.question.prompt";
@@ -32,15 +31,16 @@ public class AddQuestionAnswerCommand implements Command {
     private static final String INFO_QUESTION_WAS_ADDED = "info.question.was.added";
     //Path
     private static final String QUESTION_ADD_PAGE_PATH = "question.add.page.path";
-    private static final String QUESTIONS_PAGE_PATH = "questions.list.page.path";
     //Attributes
+    private static final String INVALID_ANSWER_DATA = "invalid.answer.data";
     private static final String INVALID_QUESTION_DATA = "invalid.question.data";
     private static final String DATABASE_ERROR = "database.error";
     private static final String QUESTION_ADDED = "question.added";
-    private static final String QUESTION_TYPE = "question_type";
+    private static final String QUESTION_TYPE = "question.type";
     //Param
     private static final String MULTI = "multi";
     private static final String SINGLE = "single";
+
     private final QuestionService questionService;
     private final AnswerService answerService;
 
@@ -51,13 +51,14 @@ public class AddQuestionAnswerCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String questionTypeParam = request.getParameter(QUESTION_TYPE);
+        String questionTypeParam = request.getParameter("question_type");
 
         if (MULTI.equals(questionTypeParam)) {
-            request.getSession().setAttribute(QUESTION_TYPE, MULTI);
+            request.getSession().setAttribute(AttributeManager.getProperty(QUESTION_TYPE), MULTI);
         } else {
-            request.getSession().setAttribute(QUESTION_TYPE, SINGLE);
+            request.getSession().setAttribute(AttributeManager.getProperty(QUESTION_TYPE), SINGLE);
         }
+
         Optional<Question> optionalQuestion = getValidOptionalQuestion(request);
         if (optionalQuestion.isPresent()) {
             Optional<Integer> optionalQuestionId = questionService.create(optionalQuestion.get());
@@ -66,19 +67,19 @@ public class AddQuestionAnswerCommand implements Command {
                 List<Answer> answers = getListOfAnswers(questionId, optionalQuestion.get(), request);
                 if (!answers.isEmpty()) {
                     if (answerService.create(answers)) {
-                        request.getSession().setAttribute(QUESTION_ADDED,
+                        request.setAttribute(AttributeManager.getProperty(QUESTION_ADDED),
                                 MessageManager.getProperty(INFO_QUESTION_WAS_ADDED));
 
-                        return ConfigurationManager.getProperty(QUESTIONS_PAGE_PATH);
+                        return ConfigurationManager.getProperty(QUESTION_ADD_PAGE_PATH);
                     } else {
-                        request.getSession().setAttribute(AttributeManager.getProperty(DATABASE_ERROR),
+                        request.setAttribute(AttributeManager.getProperty(DATABASE_ERROR),
                                 MessageManager.getProperty(ERROR_ADDING_ANSWER));
 
                         return ConfigurationManager.getProperty(QUESTION_ADD_PAGE_PATH);
                     }
                 }
             } else {
-                request.getSession().setAttribute(AttributeManager.getProperty(DATABASE_ERROR),
+                request.setAttribute(AttributeManager.getProperty(DATABASE_ERROR),
                         MessageManager.getProperty(ERROR_ADDING_QUESTION));
 
                 return ConfigurationManager.getProperty(QUESTION_ADD_PAGE_PATH);
@@ -96,32 +97,32 @@ public class AddQuestionAnswerCommand implements Command {
 
         if (!isQuestionTypeValid(questionType)) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_QUESTION_TYPE) + " " + questionType);
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
                     MessageManager.getProperty(ERROR_INVALID_QUESTION_TYPE));
             return Optional.empty();
         }
 
         if (!isQuestionEnValid(questionEn)) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_QUESTION) + " " + questionEn);
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
                     MessageManager.getProperty(ERROR_INVALID_QUESTION));
             return Optional.empty();
         }
         if (!isQuestionRuValid(questionRu)) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_QUESTION) + " " + questionRu);
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
                     MessageManager.getProperty(ERROR_INVALID_QUESTION));
             return Optional.empty();
         }
         if (!isQuestionPromptEnValid(promptEn)) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_QUESTION_PROMPT) + " " + promptEn);
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
                     MessageManager.getProperty(ERROR_INVALID_QUESTION_PROMPT));
             return Optional.empty();
         }
         if (!isQuestionPromptRuValid(promptRu)) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_QUESTION_PROMPT) + " " + promptRu);
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_QUESTION_DATA),
                     MessageManager.getProperty(ERROR_INVALID_QUESTION_PROMPT));
             return Optional.empty();
         }
@@ -138,9 +139,9 @@ public class AddQuestionAnswerCommand implements Command {
     private List<Answer> getListOfAnswers(Integer questionId, Question question, HttpServletRequest request) {
         List<Answer> answers = new ArrayList<>();
         String questionType = question.getQuestionType().getType();
-        if (questionType.equals("single")) {
+        if (questionType.equals(SINGLE)) {
             return getOneAnswer(questionId, request, answers);
-        } else if (questionType.equals("multi")) {
+        } else if (questionType.equals(MULTI)) {
             return getFewAnswers(questionId, request, answers);
         }
 
@@ -150,11 +151,12 @@ public class AddQuestionAnswerCommand implements Command {
     private List<Answer> getFewAnswers(Integer questionId, HttpServletRequest request, List<Answer> answers) {
         //There is can be only one correct answer among others
         int count = 0;
+        String isCorrectA = getCorrectAnswerValue(request.getParameter("is_answer_correct_a"));
         Answer answerA = Answer.builder()
                 .withQuestionId(questionId)
                 .withAnswerEn(request.getParameter("answer_en_a"))
                 .withAnswerRu(request.getParameter("answer_ru_a"))
-                .withIsCorrect(request.getParameter("is_answer_correct_a"))
+                .withIsCorrect(isCorrectA)
                 .build();
         if (isAnswerValid(answerA, request)) {
             if (answerA.getCorrect().equals("yes")) {
@@ -164,11 +166,12 @@ public class AddQuestionAnswerCommand implements Command {
         } else {
             return new ArrayList<>();
         }
+        String isCorrectB = getCorrectAnswerValue(request.getParameter("is_answer_correct_b"));
         Answer answerB = Answer.builder()
                 .withQuestionId(questionId)
                 .withAnswerEn(request.getParameter("answer_en_b"))
                 .withAnswerRu(request.getParameter("answer_ru_b"))
-                .withIsCorrect(request.getParameter("is_answer_correct_b"))
+                .withIsCorrect(isCorrectB)
                 .build();
         if (isAnswerValid(answerB, request)) {
             if (answerB.getCorrect().equals("yes")) {
@@ -178,11 +181,12 @@ public class AddQuestionAnswerCommand implements Command {
         } else {
             return new ArrayList<>();
         }
+        String isCorrectC = getCorrectAnswerValue(request.getParameter("is_answer_correct_c"));
         Answer answerC = Answer.builder()
                 .withQuestionId(questionId)
                 .withAnswerEn(request.getParameter("answer_en_c"))
                 .withAnswerRu(request.getParameter("answer_ru_c"))
-                .withIsCorrect(request.getParameter("is_answer_correct_c"))
+                .withIsCorrect(isCorrectC)
                 .build();
         if (isAnswerValid(answerC, request)) {
             if (answerC.getCorrect().equals("yes")) {
@@ -192,11 +196,12 @@ public class AddQuestionAnswerCommand implements Command {
         } else {
             return new ArrayList<>();
         }
+        String isCorrectD = getCorrectAnswerValue(request.getParameter("is_answer_correct_d"));
         Answer answerD = Answer.builder()
                 .withQuestionId(questionId)
                 .withAnswerEn(request.getParameter("answer_en_d"))
                 .withAnswerRu(request.getParameter("answer_ru_d"))
-                .withIsCorrect(request.getParameter("is_answer_correct_d"))
+                .withIsCorrect(isCorrectD)
                 .build();
         if (isAnswerValid(answerD, request)) {
             if (answerD.getCorrect().equals("yes")) {
@@ -208,7 +213,7 @@ public class AddQuestionAnswerCommand implements Command {
         }
         if (count > 1) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_ANSWER));
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_ANSWER_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_ANSWER_DATA),
                     MessageManager.getProperty(ERROR_MORE_THAN_ONE_CORRECT_ANSWER));
             return new ArrayList<>();
         }
@@ -233,22 +238,26 @@ public class AddQuestionAnswerCommand implements Command {
     private boolean isAnswerValid(Answer answer, HttpServletRequest request) {
         if (!isAnswerEnValid(answer.getAnswerEn())) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_ANSWER) + " " + answer.getAnswerEn());
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_ANSWER_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_ANSWER_DATA),
                     MessageManager.getProperty(ERROR_INVALID_ANSWER) + answer.getAnswerEn());
             return false;
         }
         if (!isAnswerRuValid(answer.getAnswerRu())) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_ANSWER) + " " + answer.getAnswerRu());
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_ANSWER_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_ANSWER_DATA),
                     MessageManager.getProperty(ERROR_INVALID_ANSWER) + answer.getAnswerRu());
             return false;
         }
         if (!isFieldIsCorrectValid(answer.getCorrect())) {
             LOGGER.debug(MessageManager.getProperty(ERROR_INVALID_ANSWER) + " " + answer.getCorrect());
-            request.getSession().setAttribute(AttributeManager.getProperty(INVALID_ANSWER_DATA),
+            request.setAttribute(AttributeManager.getProperty(INVALID_ANSWER_DATA),
                     MessageManager.getProperty(ERROR_INVALID_ANSWER) + answer.getCorrect());
             return false;
         }
         return true;
+    }
+
+    private String getCorrectAnswerValue(String isCorrectParam) {
+        return isCorrectParam == null ? "no" : isCorrectParam;
     }
 }

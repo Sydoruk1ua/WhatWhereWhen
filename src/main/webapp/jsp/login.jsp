@@ -9,9 +9,13 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/addons/datatables.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="hero-image">
 <%--HEADER--%>
 <jsp:include page="common/header.jsp"/>
+
+<jstl:if test="${not empty requestScope.loginError}">
+    <div class="alert alert-danger" role="alert">${requestScope.loginError}</div>
+</jstl:if>
 
 <div id="login">
     <div class="container">

@@ -47,6 +47,7 @@ public class CommandController {
         commands.put("login_page", (req, res) -> ConfigurationManager.getProperty("login.page.path"));
         commands.put("registration_page", (req, res) -> ConfigurationManager.getProperty("registration.page.path"));
         commands.put("main_page", (req, res) -> ConfigurationManager.getProperty("main.page.path"));
+        commands.put("add_question_page", (req, res) -> ConfigurationManager.getProperty("question.add.page.path"));
     }
 
 

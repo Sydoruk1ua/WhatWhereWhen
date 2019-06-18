@@ -48,31 +48,39 @@ public final class Validator {
         return "single".equals(questionType) || "multi".equals(questionType);
     }
 
+    public static boolean isFieldIsCorrectValid(String isCorrect) {
+        return "no".equals(isCorrect) || "yes".equals(isCorrect);
+    }
+
     public static boolean isQuestionEnValid(String questionEn) {
-        return questionEn != null && questionEn.length() <= 450;
+        return isValueValid(questionEn, 450);
     }
 
     public static boolean isQuestionRuValid(String questionRu) {
-        return questionRu != null && questionRu.length() <= 450;
+        return isValueValid(questionRu, 450);
     }
 
     public static boolean isQuestionPromptEnValid(String promptEn) {
-        return promptEn != null && promptEn.length() <= 200;
+        return isValueValid(promptEn, 200);
     }
 
     public static boolean isQuestionPromptRuValid(String promptRu) {
-        return promptRu != null && promptRu.length() <= 200;
+        return isValueValid(promptRu, 200);
+    }
+
+    public static boolean isMessageValid(String message) {
+        return isValueValid(message, 200);
     }
 
     public static boolean isAnswerEnValid(String answerEn) {
-        return answerEn != null && answerEn.length() <= 100;
+        return isValueValid(answerEn, 200);
     }
 
     public static boolean isAnswerRuValid(String answerRu) {
-        return answerRu != null && answerRu.length() <= 100;
+        return isValueValid(answerRu, 200);
     }
 
-    public static boolean isFieldIsCorrectValid(String isCorrect) {
-        return "no".equals(isCorrect) || "yes".equals(isCorrect);
+    private static boolean isValueValid(String value, int length) {
+        return value != null && !value.equals("") && value.length() <= length;
     }
 }

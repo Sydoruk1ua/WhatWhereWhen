@@ -11,9 +11,7 @@
 <body>
 <%--HEADER--%>
 <jsp:include page="/jsp/common/header.jsp"/>
-<%--<img src="<c:url value="/img/404.jpg"/>" style="width: 100%; height: 100%;">--%>
-<jstl:if test="${not empty requestScope.errorMessage}">
-    <div class="alert alert-danger" role="alert">${requestScope.errorMessage}</div>
-</jstl:if>
+<img src="<c:url value="/img/404.jpg"/>" style="width: 100%; height: 100%;">
+
 </body>
 </html>

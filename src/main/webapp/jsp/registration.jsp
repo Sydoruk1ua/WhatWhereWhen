@@ -9,9 +9,18 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/addons/datatables.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="hero-image">
 <%--HEADER--%>
 <jsp:include page="common/header.jsp"/>
+<c:if test="${not empty requestScope.invalid_registration_data}">
+    <div class="alert alert-danger" role="alert">${requestScope.invalid_registration_data}</div>
+</c:if>
+<c:if test="${not empty requestScope.user_exist_error}">
+    <div class="alert alert-danger" role="alert">${requestScope.user_exist_error}</div>
+</c:if>
+<c:if test="${not empty requestScope.user_not_registered}">
+    <div class="alert alert-danger" role="alert">${requestScope.user_not_registered}</div>
+</c:if>
 <div id="register">
     <div class="container">
         <div id="register-row" class="row justify-content-center align-items-center">
@@ -44,11 +53,14 @@
                             <label for="password_repeat" class="text-info"><fmt:message key="password.repeat"/>:</label><br>
                             <input type="password" name="password_repeat" id="password_repeat" class="form-control"
                                    required
-                                   pattern="^(?=.*?[A-ZА-Я])(?=.*?[a-zа-я])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,45}$">
+                                   pattern="^(?=.*?[A-ZА-Я])(?=.*?[a-zа-я])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,45}$"
+                                   title="<fmt:message key="password.verification.message"/>">
                         </div>
 
                         <input type="submit" name="submit" class="btn btn-info btn-md"
                                value="<fmt:message key="signup.enter"/>">
+                        <input type="reset" name="reset" class="btn btn-danger btn-md"
+                               value="<fmt:message key="reset"/>">
 
                     </form>
                 </div>
@@ -56,7 +68,6 @@
         </div>
     </div>
 </div>
-
 <%--FOOTER--%>
 <jsp:include page="common/footer.jsp"/>
 </body>

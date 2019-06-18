@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <html>
 <head>
     <title>Game</title>
@@ -19,7 +20,9 @@
 <body>
 <%--HEADER--%>
 <jsp:include page="common/header.jsp"/>
-
+<c:if test="${not empty requestScope.invalid_message_format}">
+    <div class="alert alert-danger" role="alert">${requestScope.invalid_message_format}</div>
+</c:if>
 <div class="container">
     <div class="row">
         <div class="col-1-2">
@@ -44,17 +47,19 @@
 
         </div>
         <div class="col-1-4">
-            <button class="open-button" onclick="openForm()">Chat</button>
+            <button class="open-button" onclick="openForm()"><fmt:message key="chat"/></button>
             <div class="form-popup" id="myForm">
                 <form action="app" class="form-container">
                     <input type="hidden" name="command" value="game"/>
-                    <h1>Chat</h1>
+                    <h1><fmt:message key="chat"/></h1>
                     <input type="hidden" name="nickname" id="nickname" value="${sessionScope.user}"/>
-                    <label for="msg"><b>Message</b></label>
-                    <textarea id="msg" placeholder="Type message.." name="msg" required></textarea>
+                    <label for="msg"><b><fmt:message key="message"/></b></label>
+                    <textarea id="msg" placeholder="<fmt:message key="type.message.placeholder"/>"
+                              name="msg" required maxlength="200"></textarea>
 
-                    <button type="submit" class="btn">Send</button>
-                    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                    <button type="submit" class="btn"><fmt:message key="send.message"/></button>
+                    <button type="button" class="btn cancel" onclick="closeForm()"><fmt:message
+                            key="close.chat"/></button>
                 </form>
             </div>
         </div>
@@ -86,9 +91,9 @@
         $.get("app?command=reloadchat");
     }
 
-    /*    setInterval(function () {
-            update();
-        }, 10000);*/
+    /*  setInterval(function () {
+          update();
+      }, 3000);*/
 </script>
 </body>
 </html>
